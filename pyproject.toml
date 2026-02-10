@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "claims-copilot"
+version = "0.1.0"
+description = "AI-powered claims operations assistant for motor insurance"
+requires-python = ">=3.10"
+dependencies = [
+    "psycopg[binary]>=3.1",
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "faker>=24.0",
+    "tqdm>=4.65",
+]
+
+[project.optional-dependencies]
+ml = [
+    "scikit-learn>=1.4",
+    "xgboost>=2.0",
+    "shap>=0.45",
+]
+llm = [
+    "anthropic>=0.40",
+]
+serving = [
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+]
+ui = [
+    "streamlit>=1.35",
+]
+dev = [
+    "claims-copilot[ml,llm,serving,ui]",
+    "pytest>=8.0",
+    "ruff>=0.4",
+    "jupyter>=1.0",
+    "matplotlib>=3.8",
+    "seaborn>=0.13",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
