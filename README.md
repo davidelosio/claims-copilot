@@ -1,6 +1,6 @@
 # Claims Copilot
 
-An AI-powered claims operations assistant for motor insurance — built as a portfolio project demonstrating end-to-end ML system design.
+An AI-powered claims operations assistant for motor insurance, built as a portfolio project demonstrating end-to-end ML system design.
 
 ## Architecture
 
@@ -24,14 +24,12 @@ Extract  Model    Signal      Action
 
 ## Layers
 
-| Layer | What | Status |
-|-------|------|--------|
-| 1 | Synthetic data generation | 🔨 |
-| 2 | LLM extraction & summarization | ⬜ |
-| 3 | Complexity / routing model | ⬜ |
-| 4 | Fraud / anomaly signal | ⬜ |
-| 5 | Next-best-action engine | ⬜ |
-| 6 | Handler UI | ⬜ |
+1. Synthetic data generation: In progress
+2. LLM extraction and summarization: Planned
+3. Complexity and routing model: Planned
+4. Fraud and anomaly signal: Planned
+5. Next best action engine: Planned
+6. Handler UI: Planned
 
 ## Setup
 
@@ -40,14 +38,14 @@ Extract  Model    Signal      Action
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Set up project (creates venv + installs everything)
-uv sync --all-extras
+uv sync
 
 # Set up PostgreSQL
 createdb claims_copilot
 psql claims_copilot < sql/schema.sql
 
 # Generate synthetic data
-uv run python scripts/generate_claims.py --n-claims 5000
+uv run python scripts/generate_claims.py -n 5000
 ```
 
 ## Tech Stack

@@ -121,6 +121,7 @@ INCIDENT_WEIGHTS = [0.35, 0.15, 0.10, 0.12, 0.10, 0.08, 0.10]
 # POLICY TYPES
 # ============================================================
 
+# third_party: RC only; comprehensive: full coverage incl. own damage; fire_theft: incendio/furto.
 POLICY_TYPES = ["third_party", "comprehensive", "fire_theft"]
 POLICY_WEIGHTS = [0.45, 0.35, 0.20]
 
@@ -154,6 +155,8 @@ EXPECTED_DOCS: dict[str, list[str]] = {
 # FRAUD PATTERNS
 # ============================================================
 
+# staged: incident arranged/fabricated; inflated: real incident, claim overstated;
+# phantom: incident never happened; repeated: same damage claimed multiple times.
 FRAUD_TYPES = ["staged", "inflated", "phantom", "repeated"]
 
 # Fraud signals / red flags that we'll bake into the data

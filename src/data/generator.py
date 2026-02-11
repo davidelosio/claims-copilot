@@ -18,7 +18,6 @@ Usage:
 
 from __future__ import annotations
 
-import random
 import uuid
 from datetime import date, datetime, time, timedelta
 from typing import Any
@@ -73,7 +72,6 @@ class ClaimsGenerator:
 
     def __init__(self, seed: int = 42):
         self.rng = np.random.default_rng(seed)
-        random.seed(seed)
         Faker.seed(seed)
         self._policyholder_cache: dict[str, dict] = {}
         self._vehicle_cache: dict[str, dict] = {}
@@ -81,9 +79,11 @@ class ClaimsGenerator:
         # For repeat-fraud pattern: track some policyholders who will file many claims
         self._repeat_fraudsters: set[str] = set()
 
-    # ================================================================
-    # PUBLIC API
-    # ================================================================
+    def _weighted_choice(self, items: list[dict], weights: list[float]) -> dict:
+        w = np.asarray(weights, dtype=float)
+        w /= w.sum()
+        idx = self.rng.choice(len(items), p=w)
+        return items[idx]
 
     def generate(self, n_claims: int = 5000) -> dict[str, list[dict]]:
         """Generate a full dataset.
@@ -130,7 +130,7 @@ class ClaimsGenerator:
 
             # Decide if this is a fraud claim
             if ph_id in self._repeat_fraudsters:
-                is_fraud = self.rng.random() < 0.6  # 60% of their claims are fraud
+                is_fraud = self.rng.random() < 0.6  # 60% of their claims are repeated fraud
                 fraud_type = "repeated" if is_fraud else None
             else:
                 is_fraud = self.rng.random() < FRAUD_RATE
@@ -171,11 +171,12 @@ class ClaimsGenerator:
                 df = pd.DataFrame(rows)
                 path = os.path.join(output_dir, f"{table_name}.csv")
                 df.to_csv(path, index=False)
-                print(f"  ✓ {table_name}: {len(rows)} rows → {path}")
+                print(f"  {table_name}: {len(rows)} rows written to {path}")
 
     def to_postgres(self, data: dict[str, list[dict]], dsn: str) -> None:
         """Insert all data into PostgreSQL."""
         import psycopg
+        from psycopg.types.json import Json
 
         table_order = [
             "policyholders", "vehicles", "policies", "claims",
@@ -192,13 +193,18 @@ class ClaimsGenerator:
                     placeholders = ", ".join([f"%({c})s" for c in cols])
                     col_names = ", ".join(cols)
                     sql = f"INSERT INTO {table_name} ({col_names}) VALUES ({placeholders})"
-                    cur.executemany(sql, rows)
-                    print(f"  ✓ {table_name}: {len(rows)} rows inserted")
+                    adapted_rows = []
+                    for row in rows:
+                        adapted = {}
+                        for k, v in row.items():
+                            if isinstance(v, (dict, list)):
+                                adapted[k] = Json(v)
+                            else:
+                                adapted[k] = v
+                        adapted_rows.append(adapted)
+                    cur.executemany(sql, adapted_rows)
+                    print(f"  {table_name}: {len(rows)} rows inserted")
             conn.commit()
-
-    # ================================================================
-    # GENERATORS
-    # ================================================================
 
     def _gen_policyholder(self) -> dict:
         gender = self.rng.choice(["M", "F"], p=[0.55, 0.45])
@@ -228,10 +234,7 @@ class ClaimsGenerator:
         return ph
 
     def _gen_vehicle(self, ph_id: str) -> dict:
-        vw = np.array(VEHICLE_WEIGHTS)
-        vw /= vw.sum()
-        idx = self.rng.choice(len(VEHICLE_CATALOG), p=vw)
-        spec = VEHICLE_CATALOG[idx]
+        spec = self._weighted_choice(VEHICLE_CATALOG, VEHICLE_WEIGHTS)
         year = int(self.rng.integers(spec["min_year"], spec["max_year"] + 1))
         # Value depreciates with age
         base_val = self.rng.uniform(*spec["value"])
@@ -452,15 +455,9 @@ class ClaimsGenerator:
 
         return claim, label, docs, events
 
-    # ================================================================
-    # HELPERS
-    # ================================================================
-
     def _pick_city(self) -> dict:
-        weights = np.array([c["weight"] for c in CITIES])
-        weights /= weights.sum()
-        idx = self.rng.choice(len(CITIES), p=weights)
-        return CITIES[idx]
+        weights = [c["weight"] for c in CITIES]
+        return self._weighted_choice(CITIES, weights)
 
     def _pick_policy(self, policies: list[dict]) -> dict:
         """Pick a policy, with bias toward repeat fraudsters."""
@@ -471,8 +468,8 @@ class ClaimsGenerator:
                 if p["policyholder_id"] in self._repeat_fraudsters
             ]
             if fraudster_policies:
-                return random.choice(fraudster_policies)
-        return random.choice(policies)
+                return self.rng.choice(fraudster_policies)
+        return self.rng.choice(policies)
 
     def _gen_num_parties(self, incident_type: str) -> int:
         if incident_type in ("theft", "vandalism", "weather", "parking"):
@@ -628,7 +625,9 @@ class ClaimsGenerator:
         if not templates:
             return f"Claim for {incident_type} incident on {incident_date} in {incident_city}."
 
-        template = random.choice(templates)
+        # numpy.choice tries to coerce NamedTuple entries into an array, which
+        # fails when fields include variable-length lists. Pick by index instead.
+        template = templates[int(self.rng.integers(0, len(templates)))]
 
         # Build fill values
         vehicle_str = f"{vehicle['make']} {vehicle['model']} ({vehicle['year']})"
@@ -640,48 +639,48 @@ class ClaimsGenerator:
             "time": incident_time.strftime("%H:%M"),
             "vehicle": vehicle_str,
             "city": incident_city,
-            "road": random.choice(ROADS),
-            "cross_road": random.choice(CROSS_ROADS),
-            "direction": random.choice(DIRECTIONS),
+            "road": self.rng.choice(ROADS),
+            "cross_road": self.rng.choice(CROSS_ROADS),
+            "direction": self.rng.choice(DIRECTIONS),
             "other_vehicle": other_vehicle_str,
-            "traffic_control": random.choice(TRAFFIC_CONTROLS),
-            "impact_point": random.choice(IMPACT_POINTS),
-            "damage_desc": random.choice(DAMAGE_DESCRIPTIONS),
-            "damage_areas": random.choice(DAMAGE_AREAS),
-            "injury_text": random.choice(INJURY_TEXTS.get(injury_severity, INJURY_TEXTS["none"])),
-            "police_text": random.choice(POLICE_TEXTS.get(police_report, POLICE_TEXTS[False])).format(
+            "traffic_control": self.rng.choice(TRAFFIC_CONTROLS),
+            "impact_point": self.rng.choice(IMPACT_POINTS),
+            "damage_desc": self.rng.choice(DAMAGE_DESCRIPTIONS),
+            "damage_areas": self.rng.choice(DAMAGE_AREAS),
+            "injury_text": self.rng.choice(INJURY_TEXTS.get(injury_severity, INJURY_TEXTS["none"])),
+            "police_text": self.rng.choice(POLICE_TEXTS.get(police_report, POLICE_TEXTS[False])).format(
                 report_num=report_num,
             ),
-            "witness_text": random.choice(WITNESS_TEXTS),
+            "witness_text": self.rng.choice(WITNESS_TEXTS),
             "report_num": report_num,
-            "driving_action": random.choice([
+            "driving_action": self.rng.choice([
                 "proceeding normally", "slowing down for traffic",
                 "turning left", "exiting a parking spot", "stopped at a red light",
             ]),
-            "other_action": random.choice([
+            "other_action": self.rng.choice([
                 "ran a red light and hit me", "pulled out without looking",
                 "changed lanes suddenly", "rear-ended me",
                 "was speeding and lost control",
             ]),
-            "cause": random.choice(CAUSES_SINGLE_VEHICLE),
-            "obstacle": random.choice(OBSTACLES),
-            "road_condition": random.choice(ROAD_CONDITIONS),
-            "weather_event": random.choice(WEATHER_EVENTS),
-            "parking_type": random.choice(PARKING_TYPES),
-            "location": random.choice(LOCATIONS),
+            "cause": self.rng.choice(CAUSES_SINGLE_VEHICLE),
+            "obstacle": self.rng.choice(OBSTACLES),
+            "road_condition": self.rng.choice(ROAD_CONDITIONS),
+            "weather_event": self.rng.choice(WEATHER_EVENTS),
+            "parking_type": self.rng.choice(PARKING_TYPES),
+            "location": self.rng.choice(LOCATIONS),
             "plate": vehicle["plate_number"],
-            "destination": random.choice(DESTINATIONS),
-            "extra_damage": random.choice([
+            "destination": self.rng.choice(DESTINATIONS),
+            "extra_damage": self.rng.choice([
                 "broke my side mirror", "smashed the window", "slashed a tire",
             ]),
-            "extra_detail": random.choice([
+            "extra_detail": self.rng.choice([
                 "Several other cars in the area were also damaged.",
                 "The municipality has declared a state of emergency.",
                 "",
             ]),
-            "water_level": random.choice(["the doors", "the windows", "the hood"]),
-            "time_parked": random.choice(["at 20:00", "in the afternoon", "overnight"]),
-            "claimed_extras": random.choice(CLAIMED_EXTRAS_FRAUD),
+            "water_level": self.rng.choice(["the doors", "the windows", "the hood"]),
+            "time_parked": self.rng.choice(["at 20:00", "in the afternoon", "overnight"]),
+            "claimed_extras": self.rng.choice(CLAIMED_EXTRAS_FRAUD),
             "inflated_amount": f"€{damage_estimate:,.2f}",
         }
 
@@ -698,7 +697,7 @@ class ClaimsGenerator:
         return text.strip()
 
     def _random_other_vehicle(self) -> str:
-        spec = random.choice(VEHICLE_CATALOG)
+        spec = self.rng.choice(VEHICLE_CATALOG)
         return f"{spec['make']} {spec['model']}"
 
     def _gen_documents(

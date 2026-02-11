@@ -3,50 +3,48 @@
 Generate synthetic motor insurance claims data.
 
 Usage:
-    python scripts/generate_claims.py --n-claims 5000 --output csv
-    python scripts/generate_claims.py --n-claims 5000 --output postgres --dsn "dbname=claims_copilot"
+    python scripts/generate_claims.py -n 5000 -o csv
+    python scripts/generate_claims.py -n 5000 -o postgres -d "dbname=claims_copilot"
 """
 
-import argparse
 import time
+
+import click
 
 from src.data.generator import ClaimsGenerator
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Generate synthetic claims data")
-    parser.add_argument("--n-claims", type=int, default=5000, help="Number of claims to generate")
-    parser.add_argument("--seed", type=int, default=42, help="Random seed")
-    parser.add_argument(
-        "--output",
-        choices=["csv", "postgres", "both"],
-        default="csv",
-        help="Output format",
-    )
-    parser.add_argument("--csv-dir", default="data", help="CSV output directory")
-    parser.add_argument("--dsn", default="dbname=claims_copilot", help="PostgreSQL DSN")
-    args = parser.parse_args()
+@click.command(context_settings={"help_option_names": ["-h"]})
+@click.option("-n", "n_claims", type=int, default=5000, show_default=True, help="Number of claims to generate")
+@click.option("-s", "seed", type=int, default=42, show_default=True, help="Random seed")
+@click.option(
+    "-o",
+    "output",
+    type=click.Choice(["csv", "postgres", "both"], case_sensitive=False),
+    default="csv",
+    show_default=True,
+    help="Output format",
+)
+@click.option("-c", "csv_dir", default="data", show_default=True, help="CSV output directory")
+@click.option("-d", "dsn", default="dbname=claims_copilot", show_default=True, help="PostgreSQL DSN")
+def main(n_claims: int, seed: int, output: str, csv_dir: str, dsn: str) -> None:
+    print(f"\nGenerating {n_claims} synthetic claims (seed={seed})...\n")
 
-    print(f"\n🏗️  Generating {args.n_claims} synthetic claims (seed={args.seed})...\n")
-    t0 = time.time()
+    gen = ClaimsGenerator(seed=seed)
+    data = gen.generate(n_claims=n_claims)
 
-    gen = ClaimsGenerator(seed=args.seed)
-    data = gen.generate(n_claims=args.n_claims)
-
-    elapsed = time.time() - t0
-    print(f"\n✅ Generated in {elapsed:.1f}s:")
     for table, rows in data.items():
         print(f"   {table}: {len(rows)} rows")
 
-    if args.output in ("csv", "both"):
-        print(f"\n📁 Writing CSV to {args.csv_dir}/")
-        gen.to_csv(data, output_dir=args.csv_dir)
+    if output in ("csv", "both"):
+        print(f"\nWriting CSV to {csv_dir}/")
+        gen.to_csv(data, output_dir=csv_dir)
 
-    if args.output in ("postgres", "both"):
-        print(f"\n🐘 Writing to PostgreSQL ({args.dsn})")
-        gen.to_postgres(data, dsn=args.dsn)
+    if output in ("postgres", "both"):
+        print(f"\nWriting to PostgreSQL ({dsn})")
+        gen.to_postgres(data, dsn=dsn)
 
-    print("\n🎉 Done!\n")
+    print("\nDone.\n")
 
     # Print some stats
     labels = data["claim_labels"]
@@ -55,7 +53,7 @@ def main():
     for l in labels:
         complexity_counts[l["complexity"]] = complexity_counts.get(l["complexity"], 0) + 1
 
-    print("📊 Dataset stats:")
+    print("Dataset stats:")
     print(f"   Fraud rate: {n_fraud}/{len(labels)} ({100*n_fraud/len(labels):.1f}%)")
     print(f"   Complexity: {complexity_counts}")
     avg_days = sum(l["handling_days"] for l in labels) / len(labels)

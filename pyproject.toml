@@ -13,13 +13,18 @@ dependencies = [
     "pandas>=2.0",
     "faker>=24.0",
     "tqdm>=4.65",
+    "click>=8.1",
 ]
 
 [project.optional-dependencies]
 ml = [
     "scikit-learn>=1.4",
     "xgboost>=2.0",
-    "shap>=0.45",
+    # llvmlite/numba/shap have no macOS x86_64 wheels; building from source is brittle.
+    # Skip them on Intel macOS so `uv sync` works.
+    "shap>=0.45; platform_system != 'Darwin' or platform_machine != 'x86_64'",
+    "numba>=0.59; platform_system != 'Darwin' or platform_machine != 'x86_64'",
+    "llvmlite>=0.42; platform_system != 'Darwin' or platform_machine != 'x86_64'",
 ]
 llm = [
     "anthropic>=0.40",

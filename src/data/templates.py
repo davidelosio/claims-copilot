@@ -24,7 +24,7 @@ class DescriptionTemplate(NamedTuple):
 # ============================================================
 
 COLLISION_TEMPLATES = [
-    # --- Detailed, well-written ---
+    # Detailed, well-written
     DescriptionTemplate(
         "On {date} at approximately {time}, I was driving my {vehicle} along {road} "
         "in {city} heading towards {direction}. At the intersection with {cross_road}, "
@@ -45,7 +45,7 @@ COLLISION_TEMPLATES = [
         ["date", "time", "road", "city", "driving_action", "other_vehicle",
          "other_action", "damage_areas", "damage_desc", "injury_text", "police_text"],
     ),
-    # --- Sparse ---
+    # Sparse
     DescriptionTemplate(
         "Car accident on {date} in {city}. Other car hit me. {damage_desc}.",
         "sparse",
@@ -57,7 +57,7 @@ COLLISION_TEMPLATES = [
         "normal",
         ["date", "road", "city", "police_text"],
     ),
-    # --- Messy / informal ---
+    # Messy / informal
     DescriptionTemplate(
         "hi so basically on {date} i was driving on {road} and this guy just came out of "
         "nowhere and hit my car on the {impact_point}.. the damage is pretty bad, "
