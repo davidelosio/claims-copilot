@@ -1,22 +1,28 @@
 """
-LLM-based extraction pipeline for claim descriptions.
+Local LLM extraction pipeline using Ollama.
 
-Takes raw free-text descriptions and produces:
-1. Structured fact card (with confidence + source snippets)
-2. Concise handler summary
-3. Missing information checklist
+Same interface as the Claude-based pipeline but runs locally.
+Uses JSON-mode prompting since local models don't support tool_use.
 
-Uses Claude API with tool_use for reliable structured output.
+Recommended models (Intel Mac 16GB):
+- mistral-small (best quality/speed tradeoff)
+- llama3.1:8b (good alternative)
+- gemma2:9b (good at structured output)
+
+Setup:
+    brew install ollama
+    ollama pull mistral-small
 """
 
 from __future__ import annotations
 
 import json
 import logging
+import re
 import time
 from typing import Any, Optional
 
-import anthropic
+import httpx
 
 from src.extraction.schemas import (
     ConfidenceLevel,
@@ -30,164 +36,68 @@ from src.extraction.schemas import (
 
 logger = logging.getLogger(__name__)
 
-# ============================================================
-# EXTRACTION TOOL SCHEMA (for Claude tool_use)
-# ============================================================
+OUTPUT_SCHEMA_TEXT = """\
+{
+  "summary": "2-4 sentence summary for the claims handler",
+  "facts": {
+    "incident_date": {"value": "DD/MM/YYYY or null", "confidence": "high|medium|low|unknown", "source_snippet": "exact text or null"},
+    "incident_time": {"value": "HH:MM or null", "confidence": "...", "source_snippet": "..."},
+    "incident_location": {"value": "street/road or null", "confidence": "...", "source_snippet": "..."},
+    "incident_city": {"value": "city name or null", "confidence": "...", "source_snippet": "..."},
+    "incident_type": "collision|single_vehicle|hit_and_run|parking|theft|vandalism|weather|unknown",
+    "num_parties": {"value": "number as string or null", "confidence": "...", "source_snippet": "..."},
+    "other_vehicle": {"value": "make/model or null", "confidence": "...", "source_snippet": "..."},
+    "damage_description": {"value": "description or null", "confidence": "...", "source_snippet": "..."},
+    "damage_areas": {"value": "parts damaged or null", "confidence": "...", "source_snippet": "..."},
+    "injuries_reported": true/false,
+    "injury_severity": "none|minor|moderate|severe|unknown",
+    "injury_details": {"value": "details or null", "confidence": "...", "source_snippet": "..."},
+    "police_report_mentioned": {"value": "yes|no|null", "confidence": "...", "source_snippet": "..."},
+    "police_report_number": {"value": "number or null", "confidence": "...", "source_snippet": "..."},
+    "witnesses_mentioned": {"value": "yes|no|null", "confidence": "...", "source_snippet": "..."}
+  },
+  "missing_info": [
+    {"field": "what's missing", "importance": "high|medium|low", "reason": "why it matters"}
+  ],
+  "language": "en|it|mixed",
+  "extraction_notes": "any inconsistencies or concerns, or null"
+}"""
 
-EXTRACTION_TOOL = {
-    "name": "submit_extraction",
-    "description": (
-        "Submit the structured extraction results for a motor insurance claim. "
-        "Extract all available facts from the claim description with confidence levels. "
-        "For each field, include the exact source snippet from the text that supports it. "
-        "If information is not present, set confidence to 'unknown' and value to null."
-    ),
-    "input_schema": {
-        "type": "object",
-        "required": ["summary", "facts", "missing_info", "language"],
-        "properties": {
-            "summary": {
-                "type": "string",
-                "description": (
-                    "A concise 2-4 sentence summary of the claim for a claims handler. "
-                    "Focus on: what happened, who was involved, what damage occurred, "
-                    "and what immediate actions are needed."
-                ),
-            },
-            "facts": {
-                "type": "object",
-                "required": [
-                    "incident_date", "incident_time", "incident_location",
-                    "incident_city", "incident_type", "num_parties",
-                    "other_vehicle", "damage_description", "damage_areas",
-                    "injuries_reported", "injury_severity", "injury_details",
-                    "police_report_mentioned", "police_report_number",
-                    "witnesses_mentioned",
-                ],
-                "properties": {
-                    "incident_date": {"$ref": "#/$defs/extracted_field"},
-                    "incident_time": {"$ref": "#/$defs/extracted_field"},
-                    "incident_location": {"$ref": "#/$defs/extracted_field"},
-                    "incident_city": {"$ref": "#/$defs/extracted_field"},
-                    "incident_type": {
-                        "type": "string",
-                        "enum": [
-                            "collision", "single_vehicle", "hit_and_run",
-                            "parking", "theft", "vandalism", "weather", "unknown",
-                        ],
-                    },
-                    "num_parties": {"$ref": "#/$defs/extracted_field"},
-                    "other_vehicle": {"$ref": "#/$defs/extracted_field"},
-                    "damage_description": {"$ref": "#/$defs/extracted_field"},
-                    "damage_areas": {"$ref": "#/$defs/extracted_field"},
-                    "injuries_reported": {"type": "boolean"},
-                    "injury_severity": {
-                        "type": "string",
-                        "enum": ["none", "minor", "moderate", "severe", "unknown"],
-                    },
-                    "injury_details": {"$ref": "#/$defs/extracted_field"},
-                    "police_report_mentioned": {"$ref": "#/$defs/extracted_field"},
-                    "police_report_number": {"$ref": "#/$defs/extracted_field"},
-                    "witnesses_mentioned": {"$ref": "#/$defs/extracted_field"},
-                },
-            },
-            "missing_info": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "required": ["field", "importance", "reason"],
-                    "properties": {
-                        "field": {"type": "string"},
-                        "importance": {
-                            "type": "string",
-                            "enum": ["high", "medium", "low"],
-                        },
-                        "reason": {"type": "string"},
-                    },
-                },
-            },
-            "language": {
-                "type": "string",
-                "enum": ["en", "it", "mixed"],
-            },
-            "extraction_notes": {
-                "type": ["string", "null"],
-                "description": (
-                    "Flag any inconsistencies, vagueness, or suspicious patterns "
-                    "in the description. null if nothing notable."
-                ),
-            },
-        },
-        "$defs": {
-            "extracted_field": {
-                "type": "object",
-                "required": ["value", "confidence"],
-                "properties": {
-                    "value": {
-                        "type": ["string", "null"],
-                        "description": "Extracted value, or null if not found",
-                    },
-                    "confidence": {
-                        "type": "string",
-                        "enum": ["high", "medium", "low", "unknown"],
-                    },
-                    "source_snippet": {
-                        "type": ["string", "null"],
-                        "description": "Exact text span from the description supporting this extraction",
-                    },
-                },
-            },
-        },
-    },
-}
-
-# ============================================================
-# SYSTEM PROMPT
-# ============================================================
-
-SYSTEM_PROMPT = """\
+SYSTEM_PROMPT = f"""\
 You are a claims extraction assistant for an Italian motor insurance company.
-
-Your job is to read a claim description (which may be in English or Italian) and extract structured facts for the claims handler.
+You read claim descriptions (English or Italian) and extract structured facts.
 
 Rules:
-1. Extract ONLY what is explicitly stated in the text. Never infer or assume.
-2. For each field, provide the exact source snippet from the text.
-3. If information is not present, set value to null and confidence to "unknown".
-4. If information is ambiguous, set confidence to "low" and note it.
-5. The summary should be written in English regardless of the description language.
-6. Flag any inconsistencies (e.g., date/time conflicts, vague details with precise amounts).
-7. For missing_info, focus on what a handler would need to process this claim efficiently.
+1. Extract ONLY what is explicitly stated. Never infer or assume.
+2. For each field, include the exact source_snippet from the text.
+3. If not present, set value to null and confidence to "unknown".
+4. The summary must be in English regardless of description language.
+5. Flag inconsistencies in extraction_notes.
 
-Incident type classification:
-- collision: two or more vehicles involved in an accident
-- single_vehicle: vehicle hit obstacle/lost control, no other vehicle
-- hit_and_run: other party fled the scene
-- parking: damage found while vehicle was parked, no other party identified
-- theft: vehicle stolen
-- vandalism: intentional damage by unknown person
-- weather: damage from hail, flooding, storms, etc.
-- unknown: cannot determine from description
+You MUST respond with ONLY valid JSON matching this exact schema, nothing else:
 
-Be precise and concise. The handler will review your extraction."""
+{OUTPUT_SCHEMA_TEXT}
 
+Respond with ONLY the JSON object. No markdown, no explanation, no backticks."""
 
-# ============================================================
-# EXTRACTION PIPELINE
-# ============================================================
 
 class ClaimExtractor:
-    """Extract structured facts from claim descriptions using Claude."""
+    """Extract structured facts from claim descriptions using a local Ollama model."""
 
     def __init__(
         self,
-        model: str = "claude-sonnet-4-20250514",
+        model: str = "mistral-nemo:12b-instruct-2407-q4_K_M",
+        base_url: str = "http://localhost:11434",
+        timeout: float = 120.0,
         max_retries: int = 2,
-        api_key: Optional[str] = None,
+        temperature: float = 0.1,
     ):
         self.model = model
+        self.base_url = base_url.rstrip("/")
+        self.timeout = timeout
         self.max_retries = max_retries
-        self.client = anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()
+        self.temperature = temperature
+        self._client = httpx.Client(timeout=timeout)
 
     def extract(
         self,
@@ -195,51 +105,22 @@ class ClaimExtractor:
         description: str,
         policy_context: Optional[dict] = None,
     ) -> ExtractionResult:
-        """Extract facts from a single claim description.
-
-        Args:
-            claim_id: Claim identifier
-            description: Free-text claim description
-            policy_context: Optional dict with policy/vehicle info to enrich extraction
-
-        Returns:
-            ExtractionResult with structured facts, summary, and missing info
-        """
+        """Extract facts from a single claim description."""
         user_message = self._build_user_message(description, policy_context)
 
         for attempt in range(self.max_retries + 1):
             try:
-                response = self.client.messages.create(
-                    model=self.model,
-                    max_tokens=2048,
-                    system=SYSTEM_PROMPT,
-                    tools=[EXTRACTION_TOOL],
-                    tool_choice={"type": "tool", "name": "submit_extraction"},
-                    messages=[{"role": "user", "content": user_message}],
-                )
-
-                # Parse tool use response
-                tool_block = next(
-                    (b for b in response.content if b.type == "tool_use"),
-                    None,
-                )
-                if tool_block is None:
-                    raise ValueError("No tool_use block in response")
-
-                return self._parse_result(claim_id, tool_block.input)
-
-            except anthropic.RateLimitError:
-                if attempt < self.max_retries:
-                    wait = 2 ** (attempt + 1)
-                    logger.warning(f"Rate limited, retrying in {wait}s...")
-                    time.sleep(wait)
-                else:
-                    raise
+                raw_json = self._call_ollama(user_message)
+                parsed = self._parse_json(raw_json)
+                return self._to_result(claim_id, parsed)
             except Exception as e:
                 if attempt < self.max_retries:
-                    logger.warning(f"Extraction failed (attempt {attempt+1}): {e}")
+                    logger.warning(
+                        f"Extraction failed for {claim_id} (attempt {attempt+1}): {e}"
+                    )
+                    time.sleep(1)
                 else:
-                    logger.error(f"Extraction failed after {self.max_retries+1} attempts: {e}")
+                    logger.error(f"Extraction failed for {claim_id} after retries: {e}")
                     return self._fallback_result(claim_id, description)
 
         return self._fallback_result(claim_id, description)
@@ -247,17 +128,9 @@ class ClaimExtractor:
     def extract_batch(
         self,
         claims: list[dict],
-        delay: float = 0.5,
+        delay: float = 0.0,
     ) -> list[ExtractionResult]:
-        """Extract facts from multiple claims.
-
-        Args:
-            claims: List of dicts with 'claim_id', 'description', and optional 'policy_context'
-            delay: Seconds between API calls (rate limiting)
-
-        Returns:
-            List of ExtractionResult
-        """
+        """Extract facts from multiple claims."""
         results = []
         for i, claim in enumerate(claims):
             logger.info(f"Extracting {i+1}/{len(claims)}: {claim['claim_id']}")
@@ -267,18 +140,63 @@ class ClaimExtractor:
                 policy_context=claim.get("policy_context"),
             )
             results.append(result)
-            if i < len(claims) - 1:
+            if delay > 0 and i < len(claims) - 1:
                 time.sleep(delay)
         return results
 
-    # ================================================================
-    # INTERNALS
-    # ================================================================
+    def check_health(self) -> bool:
+        """Check if Ollama is running and the model is available."""
+        try:
+            resp = self._client.get(f"{self.base_url}/api/tags")
+            if resp.status_code != 200:
+                return False
+            models = [m["name"] for m in resp.json().get("models", [])]
+            # Check if our model (with or without tag) is available
+            available = any(
+                self.model in m or m.startswith(self.model)
+                for m in models
+            )
+            if not available:
+                logger.warning(
+                    f"Model '{self.model}' not found. Available: {models}\n"
+                    f"Run: ollama pull {self.model}"
+                )
+            return available
+        except httpx.ConnectError:
+            logger.error(
+                "Cannot connect to Ollama. Is it running?\n"
+                "Start with: ollama serve"
+            )
+            return False
+
+
+    def _call_ollama(self, user_message: str) -> str:
+        """Call Ollama API and return raw text response."""
+        payload = {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_message},
+            ],
+            "stream": False,
+            "format": "json",
+            "options": {
+                "temperature": self.temperature,
+                "num_predict": 768,
+            },
+        }
+
+        resp = self._client.post(
+            f"{self.base_url}/api/chat",
+            json=payload,
+        )
+        resp.raise_for_status()
+        return resp.json()["message"]["content"]
 
     def _build_user_message(
         self, description: str, policy_context: Optional[dict],
     ) -> str:
-        parts = [f"<claim_description>\n{description}\n</claim_description>"]
+        parts = [f"Claim description:\n\n{description}"]
 
         if policy_context:
             ctx_lines = []
@@ -286,30 +204,48 @@ class ClaimExtractor:
                 ctx_lines.append(f"Policy type: {policy_context['policy_type']}")
             if "vehicle" in policy_context:
                 v = policy_context["vehicle"]
-                ctx_lines.append(f"Insured vehicle: {v.get('make', '')} {v.get('model', '')} ({v.get('year', '')})")
+                ctx_lines.append(
+                    f"Insured vehicle: {v.get('make', '')} {v.get('model', '')} ({v.get('year', '')})"
+                )
             if "policyholder_city" in policy_context:
                 ctx_lines.append(f"Policyholder city: {policy_context['policyholder_city']}")
             if ctx_lines:
-                ctx_text = "\n".join(ctx_lines)
-                parts.append(f"\n<policy_context>\n{ctx_text}\n</policy_context>")
+                parts.append(f"\nPolicy context:\n" + "\n".join(ctx_lines))
 
-        parts.append(
-            "\nExtract all facts from this claim description. "
-            "Use the submit_extraction tool to provide structured results."
-        )
+        parts.append("\nExtract all facts and respond with ONLY valid JSON.")
         return "\n".join(parts)
 
-    def _parse_result(self, claim_id: str, raw: dict[str, Any]) -> ExtractionResult:
-        """Parse the raw tool_use output into an ExtractionResult."""
-        facts_raw = raw.get("facts", {})
+    def _parse_json(self, raw: str) -> dict:
+        """Parse JSON from model output, handling common issues."""
+        text = raw.strip()
+
+        # Strip markdown code fences if present
+        if text.startswith("```"):
+            text = re.sub(r"^```(?:json)?\s*\n?", "", text)
+            text = re.sub(r"\n?```\s*$", "", text)
+
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError:
+            # Try to find JSON object in the text
+            match = re.search(r"\{.*\}", text, re.DOTALL)
+            if match:
+                return json.loads(match.group())
+            raise ValueError(f"Could not parse JSON from model output: {text[:200]}...")
+
+    def _to_result(self, claim_id: str, parsed: dict) -> ExtractionResult:
+        """Convert parsed JSON dict to ExtractionResult."""
+        facts_raw = parsed.get("facts", {})
 
         def parse_field(data: Any) -> ExtractedField:
             if isinstance(data, dict):
                 return ExtractedField(
                     value=data.get("value"),
-                    confidence=ConfidenceLevel(data.get("confidence", "unknown")),
+                    confidence=_safe_confidence(data.get("confidence", "unknown")),
                     source_snippet=data.get("source_snippet"),
                 )
+            if isinstance(data, str):
+                return ExtractedField(value=data, confidence=ConfidenceLevel.MEDIUM)
             return ExtractedField()
 
         facts = ExtractedFacts(
@@ -317,13 +253,13 @@ class ClaimExtractor:
             incident_time=parse_field(facts_raw.get("incident_time")),
             incident_location=parse_field(facts_raw.get("incident_location")),
             incident_city=parse_field(facts_raw.get("incident_city")),
-            incident_type=IncidentType(facts_raw.get("incident_type", "unknown")),
+            incident_type=_safe_incident_type(facts_raw.get("incident_type", "unknown")),
             num_parties=parse_field(facts_raw.get("num_parties")),
             other_vehicle=parse_field(facts_raw.get("other_vehicle")),
             damage_description=parse_field(facts_raw.get("damage_description")),
             damage_areas=parse_field(facts_raw.get("damage_areas")),
-            injuries_reported=facts_raw.get("injuries_reported", False),
-            injury_severity=InjurySeverity(facts_raw.get("injury_severity", "unknown")),
+            injuries_reported=bool(facts_raw.get("injuries_reported", False)),
+            injury_severity=_safe_injury_severity(facts_raw.get("injury_severity", "unknown")),
             injury_details=parse_field(facts_raw.get("injury_details")),
             police_report_mentioned=parse_field(facts_raw.get("police_report_mentioned")),
             police_report_number=parse_field(facts_raw.get("police_report_number")),
@@ -336,23 +272,24 @@ class ClaimExtractor:
                 importance=m.get("importance", "medium"),
                 reason=m.get("reason", ""),
             )
-            for m in raw.get("missing_info", [])
+            for m in parsed.get("missing_info", [])
+            if isinstance(m, dict)
         ]
 
         return ExtractionResult(
             claim_id=claim_id,
-            summary=raw.get("summary", ""),
+            summary=parsed.get("summary", ""),
             facts=facts,
             missing_info=missing,
-            language=raw.get("language", "en"),
-            extraction_notes=raw.get("extraction_notes"),
+            language=parsed.get("language", "en"),
+            extraction_notes=parsed.get("extraction_notes"),
         )
 
     def _fallback_result(self, claim_id: str, description: str) -> ExtractionResult:
         """Return a minimal result when extraction fails."""
         return ExtractionResult(
             claim_id=claim_id,
-            summary=f"[Extraction failed] Raw description: {description[:200]}...",
+            summary=f"[Extraction failed] Raw: {description[:200]}...",
             facts=ExtractedFacts(
                 incident_date=ExtractedField(),
                 incident_time=ExtractedField(),
@@ -360,7 +297,9 @@ class ClaimExtractor:
                 incident_city=ExtractedField(),
                 num_parties=ExtractedField(),
                 other_vehicle=ExtractedField(),
-                damage_description=ExtractedField(value=description[:200], confidence=ConfidenceLevel.LOW),
+                damage_description=ExtractedField(
+                    value=description[:200], confidence=ConfidenceLevel.LOW,
+                ),
                 damage_areas=ExtractedField(),
                 police_report_mentioned=ExtractedField(),
             ),
@@ -371,5 +310,26 @@ class ClaimExtractor:
                     reason="Automated extraction failed — manual review required",
                 ),
             ],
-            extraction_notes="Extraction pipeline failed. Manual review needed.",
+            extraction_notes="Local model extraction failed. Manual review needed.",
         )
+
+
+def _safe_confidence(val: Any) -> ConfidenceLevel:
+    try:
+        return ConfidenceLevel(str(val).lower().strip())
+    except ValueError:
+        return ConfidenceLevel.UNKNOWN
+
+
+def _safe_incident_type(val: Any) -> IncidentType:
+    try:
+        return IncidentType(str(val).lower().strip().replace(" ", "_"))
+    except ValueError:
+        return IncidentType.UNKNOWN
+
+
+def _safe_injury_severity(val: Any) -> InjurySeverity:
+    try:
+        return InjurySeverity(str(val).lower().strip())
+    except ValueError:
+        return InjurySeverity.UNKNOWN

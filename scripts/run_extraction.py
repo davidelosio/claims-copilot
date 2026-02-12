@@ -13,11 +13,10 @@ Usage:
     uv run python scripts/run_extraction.py --all --output-dir data/extractions
 """
 
-import argparse
 import json
-import time
 from pathlib import Path
 
+import click
 import pandas as pd
 
 from src.extraction.pipeline import ClaimExtractor
@@ -61,7 +60,6 @@ def load_claims(csv_dir: str, n_sample: int | None = None, seed: int = 42) -> li
 
 def evaluate(extractions: list[dict], labels_path: str, claims_path: str) -> dict:
     """Compare extractions against ground truth labels and structured claim fields."""
-    labels = pd.read_csv(labels_path).set_index("claim_id")
     claims = pd.read_csv(claims_path).set_index("claim_id")
 
     results = {
@@ -124,38 +122,41 @@ def evaluate(extractions: list[dict], labels_path: str, claims_path: str) -> dic
     return results
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Run claim extraction pipeline")
-    parser.add_argument("--csv-dir", default="data", help="Directory with generated CSVs")
-    parser.add_argument("--n-sample", type=int, default=20, help="Number of claims to extract")
-    parser.add_argument("--all", action="store_true", help="Extract all claims")
-    parser.add_argument("--output-dir", default="data/extractions", help="Output directory")
-    parser.add_argument("--eval", action="store_true", help="Run evaluation against ground truth")
-    parser.add_argument("--model", default="claude-sonnet-4-20250514", help="Claude model to use")
-    parser.add_argument("--delay", type=float, default=0.5, help="Delay between API calls (s)")
-    args = parser.parse_args()
-
-    n = None if args.all else args.n_sample
-    print(f"\n📋 Loading claims from {args.csv_dir}/ (sample={n or 'all'})...")
-    claims = load_claims(args.csv_dir, n_sample=n)
+@click.command(help="Run claim extraction pipeline")
+@click.option("--csv-dir", default="data", type=click.Path(file_okay=False), show_default=True,
+              help="Directory with generated CSVs")
+@click.option("--n-sample", type=int, default=20, show_default=True,
+              help="Number of claims to extract")
+@click.option("--all", "extract_all", is_flag=True, help="Extract all claims")
+@click.option("--output-dir", default="data/extractions", type=click.Path(file_okay=False),
+              show_default=True, help="Output directory")
+@click.option("--eval", "run_eval", is_flag=True, help="Run evaluation against ground truth")
+@click.option("--model", default="mistral:7b-instruct-q4_K_M", show_default=True,
+              help="Model to use")
+@click.option("--delay", type=float, default=0.5, show_default=True,
+              help="Delay between API calls (s)")
+@click.option("--timeout", type=float, default=120.0, show_default=True,
+              help="Ollama request timeout (s)")
+def main(csv_dir: str, n_sample: int, extract_all: bool, output_dir: str,
+         run_eval: bool, model: str, delay: float, timeout: float):
+    n = None if extract_all else n_sample
+    print(f"\nLoading claims from {csv_dir}/ (sample={n or 'all'})...")
+    claims = load_claims(csv_dir, n_sample=n)
     print(f"   Loaded {len(claims)} claims")
 
-    print(f"\n🤖 Running extraction with {args.model}...")
-    extractor = ClaimExtractor(model=args.model)
-    t0 = time.time()
-    results = extractor.extract_batch(claims, delay=args.delay)
-    elapsed = time.time() - t0
-    print(f"\n✅ Extracted {len(results)} claims in {elapsed:.1f}s ({elapsed/len(results):.1f}s/claim)")
+    print(f"\nRunning extraction with {model}...")
+    extractor = ClaimExtractor(model=model, timeout=timeout)
+    results = extractor.extract_batch(claims, delay=delay)
 
     # Save results
-    output_dir = Path(args.output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
+    output_path = Path(output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
 
     extractions_raw = [r.model_dump(mode="json") for r in results]
-    output_file = output_dir / "extractions.json"
+    output_file = output_path / "extractions.json"
     with open(output_file, "w") as f:
         json.dump(extractions_raw, f, indent=2, default=str)
-    print(f"\n💾 Saved to {output_file}")
+    print(f"\nSaved to {output_file}")
 
     # Show a few examples
     print("\n" + "=" * 70)
@@ -173,14 +174,14 @@ def main():
             print(f"Notes: {r.extraction_notes}")
 
     # Evaluation
-    if args.eval:
+    if run_eval:
         print("\n" + "=" * 70)
         print("EVALUATION vs GROUND TRUTH")
         print("=" * 70)
         eval_results = evaluate(
             extractions_raw,
-            labels_path=str(Path(args.csv_dir) / "claim_labels.csv"),
-            claims_path=str(Path(args.csv_dir) / "claims.csv"),
+            labels_path=str(Path(csv_dir) / "claim_labels.csv"),
+            claims_path=str(Path(csv_dir) / "claims.csv"),
         )
         print(f"\nTotal evaluated: {eval_results['total']}")
         print(f"Incident type accuracy: {eval_results.get('incident_type_accuracy_pct', 0)}%")
@@ -188,7 +189,7 @@ def main():
         print(f"Police report accuracy: {eval_results.get('police_report_accuracy_pct', 0)}%")
         print(f"City extraction accuracy: {eval_results.get('city_accuracy_pct', 0)}%")
 
-        eval_file = output_dir / "eval_results.json"
+        eval_file = output_path / "eval_results.json"
         with open(eval_file, "w") as f:
             json.dump(eval_results, f, indent=2)
         print(f"\nSaved eval to {eval_file}")
