@@ -7,7 +7,7 @@ Usage:
     python scripts/generate_claims.py -n 5000 -o postgres -d "dbname=claims_copilot"
 """
 
-import time
+from collections import Counter
 
 import click
 
@@ -49,9 +49,7 @@ def main(n_claims: int, seed: int, output: str, csv_dir: str, dsn: str) -> None:
     # Print some stats
     labels = data["claim_labels"]
     n_fraud = sum(1 for l in labels if l["is_fraud"])
-    complexity_counts = {}
-    for l in labels:
-        complexity_counts[l["complexity"]] = complexity_counts.get(l["complexity"], 0) + 1
+    complexity_counts = Counter(l["complexity"] for l in labels)
 
     print("Dataset stats:")
     print(f"   Fraud rate: {n_fraud}/{len(labels)} ({100*n_fraud/len(labels):.1f}%)")

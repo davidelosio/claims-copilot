@@ -20,7 +20,6 @@ from __future__ import annotations
 
 import uuid
 from datetime import date, datetime, time, timedelta
-from typing import Any
 
 import numpy as np
 from faker import Faker
@@ -31,7 +30,6 @@ from src.data.constants import (
     DOCUMENT_TYPES,
     EXPECTED_DOCS,
     FRAUD_RATE,
-    FRAUD_TYPES,
     FUEL_TYPES,
     FUEL_WEIGHTS,
     INCIDENT_TYPES,
@@ -41,34 +39,15 @@ from src.data.constants import (
     VEHICLE_CATALOG,
     VEHICLE_WEIGHTS,
 )
-from src.data.templates import (
-    CAUSES_SINGLE_VEHICLE,
-    CLAIMED_EXTRAS_FRAUD,
-    CROSS_ROADS,
-    DAMAGE_AREAS,
-    DAMAGE_DESCRIPTIONS,
-    DESTINATIONS,
-    DIRECTIONS,
-    FRAUD_TEMPLATES_BY_TYPE,
-    IMPACT_POINTS,
-    INJURY_TEXTS,
-    LOCATIONS,
-    OBSTACLES,
-    PARKING_TYPES,
-    POLICE_TEXTS,
-    ROAD_CONDITIONS,
-    ROADS,
-    TEMPLATES_BY_TYPE,
-    TRAFFIC_CONTROLS,
-    WEATHER_EVENTS,
-    WITNESS_TEXTS,
-)
+from src.data.descriptions import generate_description
+from src.data.events import generate_claim_events
+from src.data.io import to_csv, to_postgres
 
 fake = Faker("it_IT")
 
 
 class ClaimsGenerator:
-    """Generate synthetic motor insurance claims data."""
+    """Generate synthetic motor insurance claims synthetic data."""
 
     def __init__(self, seed: int = 42):
         self.rng = np.random.default_rng(seed)
@@ -85,7 +64,7 @@ class ClaimsGenerator:
         idx = self.rng.choice(len(items), p=w)
         return items[idx]
 
-    def generate(self, n_claims: int = 5000) -> dict[str, list[dict]]:
+    def generate(self, n_claims: int = 5000, claims_per_ph_ratio: float = 1.3) -> dict[str, list[dict]]:
         """Generate a full dataset.
 
         Returns dict with keys:
@@ -94,7 +73,7 @@ class ClaimsGenerator:
         """
         # Step 1: decide how many policyholders we need
         # avg ~1.3 claims per policyholder, some have more
-        n_policyholders = int(n_claims / 1.3)
+        n_policyholders = int(n_claims / claims_per_ph_ratio)
 
         # Step 2: generate policyholders + vehicles + policies
         policyholders = [self._gen_policyholder() for _ in range(n_policyholders)]
@@ -161,50 +140,11 @@ class ClaimsGenerator:
 
     def to_csv(self, data: dict[str, list[dict]], output_dir: str = "data") -> None:
         """Write all tables to CSV files."""
-        import os
-
-        import pandas as pd
-
-        os.makedirs(output_dir, exist_ok=True)
-        for table_name, rows in data.items():
-            if rows:
-                df = pd.DataFrame(rows)
-                path = os.path.join(output_dir, f"{table_name}.csv")
-                df.to_csv(path, index=False)
-                print(f"  {table_name}: {len(rows)} rows written to {path}")
+        to_csv(data, output_dir=output_dir)
 
     def to_postgres(self, data: dict[str, list[dict]], dsn: str) -> None:
         """Insert all data into PostgreSQL."""
-        import psycopg
-        from psycopg.types.json import Json
-
-        table_order = [
-            "policyholders", "vehicles", "policies", "claims",
-            "claim_labels", "claim_documents", "claim_events",
-        ]
-
-        with psycopg.connect(dsn) as conn:
-            with conn.cursor() as cur:
-                for table_name in table_order:
-                    rows = data.get(table_name, [])
-                    if not rows:
-                        continue
-                    cols = list(rows[0].keys())
-                    placeholders = ", ".join([f"%({c})s" for c in cols])
-                    col_names = ", ".join(cols)
-                    sql = f"INSERT INTO {table_name} ({col_names}) VALUES ({placeholders})"
-                    adapted_rows = []
-                    for row in rows:
-                        adapted = {}
-                        for k, v in row.items():
-                            if isinstance(v, (dict, list)):
-                                adapted[k] = Json(v)
-                            else:
-                                adapted[k] = v
-                        adapted_rows.append(adapted)
-                    cur.executemany(sql, adapted_rows)
-                    print(f"  {table_name}: {len(rows)} rows inserted")
-            conn.commit()
+        to_postgres(data, dsn=dsn)
 
     def _gen_policyholder(self) -> dict:
         gender = self.rng.choice(["M", "F"], p=[0.55, 0.45])
@@ -359,16 +299,15 @@ class ClaimsGenerator:
         )
 
         # Free-text description
-        description = self._gen_description(
+        description = generate_description(
+            rng=self.rng,
             incident_type=incident_type,
             incident_date=incident_date,
             incident_time=incident_time,
             incident_city=incident_city,
             vehicle=vehicle,
-            injuries=injuries,
             injury_severity=injury_severity,
             police_report=police_report,
-            num_parties=num_parties,
             damage_estimate=damage_estimate,
             is_fraud=is_fraud,
             fraud_type=fraud_type,
@@ -451,7 +390,14 @@ class ClaimsGenerator:
         docs = self._gen_documents(claim_id, incident_type, is_fraud)
 
         # Events
-        events = self._gen_events(claim_id, created_at, handling_days, status, handler_id)
+        events = generate_claim_events(
+            rng=self.rng,
+            claim_id=claim_id,
+            created_at=created_at,
+            handling_days=handling_days,
+            status=status,
+            handler_id=handler_id,
+        )
 
         return claim, label, docs, events
 
@@ -598,108 +544,6 @@ class ClaimsGenerator:
 
         return complexity, handling_days, num_touches
 
-    def _gen_description(
-        self,
-        incident_type: str,
-        incident_date: date,
-        incident_time: time,
-        incident_city: str,
-        vehicle: dict,
-        injuries: bool,
-        injury_severity: str,
-        police_report: bool,
-        num_parties: int,
-        damage_estimate: float,
-        is_fraud: bool,
-        fraud_type: str | None,
-    ) -> str:
-        """Generate a free-text claim description from templates."""
-        # Pick template
-        if is_fraud and fraud_type in ("staged", "inflated") and incident_type in FRAUD_TEMPLATES_BY_TYPE:
-            templates = FRAUD_TEMPLATES_BY_TYPE[incident_type]
-        elif is_fraud and fraud_type == "phantom" and incident_type in FRAUD_TEMPLATES_BY_TYPE:
-            templates = FRAUD_TEMPLATES_BY_TYPE.get(incident_type, TEMPLATES_BY_TYPE.get(incident_type, []))
-        else:
-            templates = TEMPLATES_BY_TYPE.get(incident_type, [])
-
-        if not templates:
-            return f"Claim for {incident_type} incident on {incident_date} in {incident_city}."
-
-        # numpy.choice tries to coerce NamedTuple entries into an array, which
-        # fails when fields include variable-length lists. Pick by index instead.
-        template = templates[int(self.rng.integers(0, len(templates)))]
-
-        # Build fill values
-        vehicle_str = f"{vehicle['make']} {vehicle['model']} ({vehicle['year']})"
-        other_vehicle_str = self._random_other_vehicle()
-        report_num = f"{self.rng.integers(1000, 9999)}/{incident_date.year}"
-
-        fill = {
-            "date": incident_date.strftime("%d/%m/%Y"),
-            "time": incident_time.strftime("%H:%M"),
-            "vehicle": vehicle_str,
-            "city": incident_city,
-            "road": self.rng.choice(ROADS),
-            "cross_road": self.rng.choice(CROSS_ROADS),
-            "direction": self.rng.choice(DIRECTIONS),
-            "other_vehicle": other_vehicle_str,
-            "traffic_control": self.rng.choice(TRAFFIC_CONTROLS),
-            "impact_point": self.rng.choice(IMPACT_POINTS),
-            "damage_desc": self.rng.choice(DAMAGE_DESCRIPTIONS),
-            "damage_areas": self.rng.choice(DAMAGE_AREAS),
-            "injury_text": self.rng.choice(INJURY_TEXTS.get(injury_severity, INJURY_TEXTS["none"])),
-            "police_text": self.rng.choice(POLICE_TEXTS.get(police_report, POLICE_TEXTS[False])).format(
-                report_num=report_num,
-            ),
-            "witness_text": self.rng.choice(WITNESS_TEXTS),
-            "report_num": report_num,
-            "driving_action": self.rng.choice([
-                "proceeding normally", "slowing down for traffic",
-                "turning left", "exiting a parking spot", "stopped at a red light",
-            ]),
-            "other_action": self.rng.choice([
-                "ran a red light and hit me", "pulled out without looking",
-                "changed lanes suddenly", "rear-ended me",
-                "was speeding and lost control",
-            ]),
-            "cause": self.rng.choice(CAUSES_SINGLE_VEHICLE),
-            "obstacle": self.rng.choice(OBSTACLES),
-            "road_condition": self.rng.choice(ROAD_CONDITIONS),
-            "weather_event": self.rng.choice(WEATHER_EVENTS),
-            "parking_type": self.rng.choice(PARKING_TYPES),
-            "location": self.rng.choice(LOCATIONS),
-            "plate": vehicle["plate_number"],
-            "destination": self.rng.choice(DESTINATIONS),
-            "extra_damage": self.rng.choice([
-                "broke my side mirror", "smashed the window", "slashed a tire",
-            ]),
-            "extra_detail": self.rng.choice([
-                "Several other cars in the area were also damaged.",
-                "The municipality has declared a state of emergency.",
-                "",
-            ]),
-            "water_level": self.rng.choice(["the doors", "the windows", "the hood"]),
-            "time_parked": self.rng.choice(["at 20:00", "in the afternoon", "overnight"]),
-            "claimed_extras": self.rng.choice(CLAIMED_EXTRAS_FRAUD),
-            "inflated_amount": f"€{damage_estimate:,.2f}",
-        }
-
-        # Fill template, ignoring missing keys
-        try:
-            text = template.template.format_map(
-                _DefaultDict(fill),
-            )
-        except Exception:
-            text = template.template
-            for k, v in fill.items():
-                text = text.replace(f"{{{k}}}", str(v))
-
-        return text.strip()
-
-    def _random_other_vehicle(self) -> str:
-        spec = self.rng.choice(VEHICLE_CATALOG)
-        return f"{spec['make']} {spec['model']}"
-
     def _gen_documents(
         self, claim_id: str, incident_type: str, is_fraud: bool,
     ) -> list[dict]:
@@ -732,77 +576,3 @@ class ClaimsGenerator:
             })
 
         return docs
-
-    def _gen_events(
-        self,
-        claim_id: str,
-        created_at: datetime,
-        handling_days: int,
-        status: str,
-        handler_id: str,
-    ) -> list[dict]:
-        """Generate a realistic event timeline for the claim."""
-        events = []
-        ts = created_at
-
-        # Created
-        events.append({
-            "claim_id": claim_id,
-            "event_type": "created",
-            "event_timestamp": ts,
-            "event_data": None,
-            "actor": "system",
-        })
-
-        # Assigned (1-4 hours later)
-        ts += timedelta(hours=int(self.rng.integers(1, 5)))
-        events.append({
-            "claim_id": claim_id,
-            "event_type": "assigned",
-            "event_timestamp": ts,
-            "event_data": {"handler_id": handler_id},
-            "actor": "system",
-        })
-
-        # Some intermediate events
-        n_intermediate = max(0, int(self.rng.normal(handling_days / 5, 1)))
-        for _ in range(min(n_intermediate, 10)):
-            ts += timedelta(
-                days=int(self.rng.integers(1, max(2, handling_days // 4))),
-                hours=int(self.rng.integers(0, 8)),
-            )
-            if ts > created_at + timedelta(days=handling_days):
-                break
-            event_type = self.rng.choice([
-                "doc_requested", "doc_uploaded", "contacted_customer",
-                "note_added", "escalated",
-            ], p=[0.25, 0.25, 0.20, 0.20, 0.10])
-            events.append({
-                "claim_id": claim_id,
-                "event_type": event_type,
-                "event_timestamp": ts,
-                "event_data": None,
-                "actor": handler_id,
-            })
-
-        # Final event
-        final_ts = created_at + timedelta(days=handling_days)
-        final_type = "settled" if status in ("settled", "reopened") else "denied"
-        if status in ("in_progress", "pending_docs"):
-            final_type = "note_added"  # still open
-        events.append({
-            "claim_id": claim_id,
-            "event_type": final_type,
-            "event_timestamp": final_ts,
-            "event_data": None,
-            "actor": handler_id,
-        })
-
-        return events
-
-
-class _DefaultDict(dict):
-    """dict subclass that returns '{key}' for missing keys instead of raising."""
-
-    def __missing__(self, key: str) -> str:
-        return f"[{key}]"

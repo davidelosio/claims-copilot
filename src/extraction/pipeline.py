@@ -1,17 +1,11 @@
 """
 Local LLM extraction pipeline using Ollama.
 
-Same interface as the Claude-based pipeline but runs locally.
 Uses JSON-mode prompting since local models don't support tool_use.
 
-Recommended models (Intel Mac 16GB):
-- mistral-small (best quality/speed tradeoff)
-- llama3.1:8b (good alternative)
-- gemma2:9b (good at structured output)
-
-Setup:
-    brew install ollama
-    ollama pull mistral-small
+Recommended models:
+- mistral-nemo:12b-instruct-2407-q4_K_M (24GB+ Apple Silicon)
+- mistral:7b-instruct-q4_K_M (safer for 16GB)
 """
 
 from __future__ import annotations
@@ -88,15 +82,17 @@ class ClaimExtractor:
         self,
         model: str = "mistral-nemo:12b-instruct-2407-q4_K_M",
         base_url: str = "http://localhost:11434",
-        timeout: float = 120.0,
+        timeout: float = 240.0,
         max_retries: int = 2,
         temperature: float = 0.1,
+        num_batch: int | None = None,
     ):
         self.model = model
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
         self.max_retries = max_retries
         self.temperature = temperature
+        self.num_batch = num_batch
         self._client = httpx.Client(timeout=timeout)
 
     def extract(
@@ -172,6 +168,13 @@ class ClaimExtractor:
 
     def _call_ollama(self, user_message: str) -> str:
         """Call Ollama API and return raw text response."""
+        options: dict[str, Any] = {
+            "temperature": self.temperature,
+            "num_predict": 512,
+        }
+        if self.num_batch is not None:
+            options["num_batch"] = self.num_batch
+
         payload = {
             "model": self.model,
             "messages": [
@@ -180,10 +183,7 @@ class ClaimExtractor:
             ],
             "stream": False,
             "format": "json",
-            "options": {
-                "temperature": self.temperature,
-                "num_predict": 768,
-            },
+            "options": options,
         }
 
         resp = self._client.post(
@@ -258,7 +258,7 @@ class ClaimExtractor:
             other_vehicle=parse_field(facts_raw.get("other_vehicle")),
             damage_description=parse_field(facts_raw.get("damage_description")),
             damage_areas=parse_field(facts_raw.get("damage_areas")),
-            injuries_reported=bool(facts_raw.get("injuries_reported", False)),
+            injuries_reported=_safe_bool(facts_raw.get("injuries_reported")),
             injury_severity=_safe_injury_severity(facts_raw.get("injury_severity", "unknown")),
             injury_details=parse_field(facts_raw.get("injury_details")),
             police_report_mentioned=parse_field(facts_raw.get("police_report_mentioned")),
@@ -319,6 +319,14 @@ def _safe_confidence(val: Any) -> ConfidenceLevel:
         return ConfidenceLevel(str(val).lower().strip())
     except ValueError:
         return ConfidenceLevel.UNKNOWN
+
+
+def _safe_bool(val: Any) -> bool:
+    if isinstance(val, bool):
+        return val
+    if val is None:
+        return False
+    return str(val).lower().strip() in {"true", "1", "yes"}
 
 
 def _safe_incident_type(val: Any) -> IncidentType:
