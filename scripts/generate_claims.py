@@ -48,13 +48,13 @@ def main(n_claims: int, seed: int, output: str, csv_dir: str, dsn: str) -> None:
 
     # Print some stats
     labels = data["claim_labels"]
-    n_fraud = sum(1 for l in labels if l["is_fraud"])
-    complexity_counts = Counter(l["complexity"] for l in labels)
+    n_fraud = sum(1 for label in labels if label["is_fraud"])
+    complexity_counts = Counter(label["complexity"] for label in labels)
 
     print("Dataset stats:")
     print(f"   Fraud rate: {n_fraud}/{len(labels)} ({100*n_fraud/len(labels):.1f}%)")
     print(f"   Complexity: {complexity_counts}")
-    avg_days = sum(l["handling_days"] for l in labels) / len(labels)
+    avg_days = sum(label["handling_days"] for label in labels) / len(labels)
     print(f"   Avg handling days: {avg_days:.1f}")
 
 

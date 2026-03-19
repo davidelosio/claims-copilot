@@ -1,0 +1,36 @@
+{
+  "incident_type_accuracy": 0,
+  "injury_detection_accuracy": 1,
+  "police_report_accuracy": 1,
+  "city_accuracy": 0,
+  "total": 1,
+  "details": [
+    {
+      "claim_id": "CLM-01501",
+      "incident_type": {
+        "gt": "hit_and_run",
+        "pred": "unknown",
+        "match": false
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "bologna",
+        "pred": "none",
+        "match": false
+      }
+    }
+  ],
+  "incident_type_accuracy_pct": 0.0,
+  "injury_detection_accuracy_pct": 100.0,
+  "police_report_accuracy_pct": 100.0,
+  "city_accuracy_pct": 0.0
+}

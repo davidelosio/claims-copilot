@@ -1,0 +1,85 @@
+[
+  {
+    "claim_id": "CLM-01501",
+    "summary": "On January 27, 2-4am in Bologna, a Renault Captur from the policyholder's area was hit by an unknown vehicle resulting in broken headlight and crumpled fender; police report filed.",
+    "facts": {
+      "incident_date": {
+        "value": "27/01/2022",
+        "confidence": "high",
+        "source_snippet": null
+      },
+      "incident_time": {
+        "value": "00:12",
+        "confidence": "medium",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Via Marconi in Bologna",
+        "confidence": "high",
+        "source_snippet": null
+      },
+      "incident_city": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_type": "unknown",
+      "num_parties": {
+        "value": "2",
+        "confidence": "medium",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "broken headlight and crumpled fender",
+        "confidence": "high",
+        "source_snippet": null
+      },
+      "damage_areas": {
+        "value": "headlights and fenders",
+        "confidence": "medium",
+        "source_snippet": null
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": "null",
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_city",
+        "importance": "medium",
+        "reason": "The policyholder's city is Padova, but the incident occurred in Bologna."
+      },
+      {
+        "field": "other_vehicle",
+        "importance": "high",
+        "reason": "Details of other vehicle involved are missing which could affect claim processing and investigation."
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  }
+]

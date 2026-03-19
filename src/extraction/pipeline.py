@@ -210,7 +210,7 @@ class ClaimExtractor:
             if "policyholder_city" in policy_context:
                 ctx_lines.append(f"Policyholder city: {policy_context['policyholder_city']}")
             if ctx_lines:
-                parts.append(f"\nPolicy context:\n" + "\n".join(ctx_lines))
+                parts.append("\nPolicy context:\n" + "\n".join(ctx_lines))
 
         parts.append("\nExtract all facts and respond with ONLY valid JSON.")
         return "\n".join(parts)

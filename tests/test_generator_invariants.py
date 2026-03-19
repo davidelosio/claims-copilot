@@ -22,7 +22,7 @@ def test_generated_data_has_basic_relational_consistency():
 
     policy_ids = {p["policy_id"] for p in data["policies"]}
     claim_ids = {c["claim_id"] for c in data["claims"]}
-    label_claim_ids = {l["claim_id"] for l in data["claim_labels"]}
+    label_claim_ids = {label["claim_id"] for label in data["claim_labels"]}
     doc_claim_ids = {d["claim_id"] for d in data["claim_documents"]}
     event_claim_ids = {e["claim_id"] for e in data["claim_events"]}
 

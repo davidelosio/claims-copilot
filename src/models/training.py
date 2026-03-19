@@ -300,16 +300,36 @@ def get_feature_importance(
 class ComplexityPredictor:
     """Load trained models and predict on new claims."""
 
+    REQUIRED_ARTIFACTS = (
+        "complexity_model.pkl",
+        "handling_days_model.pkl",
+        "fraud_model.pkl",
+        "feature_names.json",
+    )
     LABEL_MAP = {"simple": 0, "medium": 1, "complex": 2}
     INV_LABEL_MAP = {0: "simple", 1: "medium", 2: "complex"}
     QUEUE_MAP = {"simple": "fast_lane", "medium": "standard", "complex": "specialist"}
 
     def __init__(self, model_dir: str = "models"):
         self.model_dir = Path(model_dir)
+        missing = self.missing_artifacts(self.model_dir)
+        if missing:
+            raise FileNotFoundError(
+                f"Missing model artifacts in {self.model_dir}: {', '.join(missing)}"
+            )
         self.complexity_model = self._load("complexity_model.pkl")
         self.handling_model = self._load("handling_days_model.pkl")
         self.fraud_model = self._load("fraud_model.pkl")
         self.feature_names = self._load_json("feature_names.json")
+
+    @classmethod
+    def missing_artifacts(cls, model_dir: str | Path = "models") -> list[str]:
+        base_dir = Path(model_dir)
+        return [
+            filename
+            for filename in cls.REQUIRED_ARTIFACTS
+            if not (base_dir / filename).exists()
+        ]
 
     def predict(self, features: pd.DataFrame) -> list[dict]:
         """Predict complexity, handling days, and fraud for one or more claims.
@@ -373,14 +393,10 @@ class ComplexityPredictor:
 
     def _load(self, filename: str) -> object:
         path = self.model_dir / filename
-        if path.exists():
-            with open(path, "rb") as f:
-                return pickle.load(f)
-        return None
+        with open(path, "rb") as f:
+            return pickle.load(f)
 
     def _load_json(self, filename: str) -> Optional[list]:
         path = self.model_dir / filename
-        if path.exists():
-            with open(path) as f:
-                return json.load(f)
-        return None
+        with open(path) as f:
+            return json.load(f)
