@@ -12,6 +12,13 @@ The repo combines:
 - deterministic next-best-action logic for handlers
 - a Streamlit UI that turns the pipeline into a usable review surface
 
+## Demo
+
+- Watch the 90-second product walkthrough: [`docs/assets/demo.mov`](docs/assets/demo.mov)
+- Representative screenshots are included below from the handler UI
+
+![Claims Copilot overview](docs/assets/complexity-scores.png)
+
 ## What This Project Demonstrates
 
 - framing an ambiguous business workflow as an AI product
@@ -50,6 +57,16 @@ flowchart LR
     G --> H
     H --> I[Streamlit handler UI]
 ```
+
+## Screenshots
+
+**Structured extraction and claim review**
+
+![Extracted facts view](docs/assets/Extracted-facts.png)
+
+**Next-best-action recommendations**
+
+![Next-best-action view](docs/assets/next-best-action.png)
 
 ## Representative Example
 
@@ -183,7 +200,7 @@ uv run streamlit run src/ui/app.py
 ## Limitations
 
 - no service boundary yet; the UI loads artifacts directly from local files
-- extraction evaluation is scaffolded, but not yet committed with a broad benchmark run
+- extraction evaluation is committed for a 50-claim sample, but not yet for a broad benchmark run
 - no production auth, monitoring, feedback capture, or tracing
 - next-best-action logic is deterministic v1 logic, not a learned decision policy
 - synthetic data is useful for prototyping and evaluation loops, but not a substitute for real insurer operations data
