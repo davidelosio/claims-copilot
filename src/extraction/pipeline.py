@@ -170,7 +170,7 @@ class ClaimExtractor:
         """Call Ollama API and return raw text response."""
         options: dict[str, Any] = {
             "temperature": self.temperature,
-            "num_predict": 512,
+            "num_predict": 1024,
         }
         if self.num_batch is not None:
             options["num_batch"] = self.num_batch
@@ -226,7 +226,12 @@ class ClaimExtractor:
 
         try:
             return json.loads(text)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
+            logger.error(
+                "Invalid JSON from model: %s\nRaw model output:\n%s",
+                e,
+                text,
+            )
             # Try to find JSON object in the text
             match = re.search(r"\{.*\}", text, re.DOTALL)
             if match:

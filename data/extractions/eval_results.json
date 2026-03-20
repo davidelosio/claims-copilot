@@ -1,16 +1,16 @@
 {
-  "incident_type_accuracy": 0,
-  "injury_detection_accuracy": 1,
-  "police_report_accuracy": 1,
-  "city_accuracy": 0,
-  "total": 1,
+  "incident_type_accuracy": 40,
+  "injury_detection_accuracy": 47,
+  "police_report_accuracy": 45,
+  "city_accuracy": 50,
+  "total": 50,
   "details": [
     {
       "claim_id": "CLM-01501",
       "incident_type": {
         "gt": "hit_and_run",
-        "pred": "unknown",
-        "match": false
+        "pred": "hit_and_run",
+        "match": true
       },
       "injuries": {
         "gt": false,
@@ -24,13 +24,1140 @@
       },
       "city": {
         "gt": "bologna",
-        "pred": "none",
+        "pred": "bologna",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-02586",
+      "incident_type": {
+        "gt": "parking",
+        "pred": "vandalism",
         "match": false
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": false,
+        "match": false
+      },
+      "city": {
+        "gt": "torino",
+        "pred": "torino",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-02653",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "roma",
+        "pred": "roma",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-01055",
+      "incident_type": {
+        "gt": "parking",
+        "pred": "hit_and_run",
+        "match": false
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "modena",
+        "pred": "modena",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00705",
+      "incident_type": {
+        "gt": "hit_and_run",
+        "pred": "hit_and_run",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "genova",
+        "pred": "genova",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00106",
+      "incident_type": {
+        "gt": "weather",
+        "pred": "weather",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "salerno",
+        "pred": "salerno",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00589",
+      "incident_type": {
+        "gt": "vandalism",
+        "pred": "vandalism",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "napoli",
+        "pred": "napoli",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-02468",
+      "incident_type": {
+        "gt": "parking",
+        "pred": "vandalism",
+        "match": false
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "roma",
+        "pred": "roma",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-02413",
+      "incident_type": {
+        "gt": "vandalism",
+        "pred": "vandalism",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "lecce",
+        "pred": "lecce",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-01600",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "roma",
+        "pred": "roma",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-02464",
+      "incident_type": {
+        "gt": "theft",
+        "pred": "theft",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "catania",
+        "pred": "catania",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00228",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "catania",
+        "pred": "catania",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00915",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "napoli",
+        "pred": "napoli",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00794",
+      "incident_type": {
+        "gt": "weather",
+        "pred": "weather",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "taranto",
+        "pred": "taranto",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-03021",
+      "incident_type": {
+        "gt": "theft",
+        "pred": "theft",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "roma",
+        "pred": "",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-03543",
+      "incident_type": {
+        "gt": "theft",
+        "pred": "theft",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "sassari",
+        "pred": "sassari",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-01073",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": true,
+        "pred": false,
+        "match": false
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "bologna",
+        "pred": "bologna",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-03351",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "bologna",
+        "pred": "bologna",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-01744",
+      "incident_type": {
+        "gt": "theft",
+        "pred": "theft",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "parma",
+        "pred": "",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-01084",
+      "incident_type": {
+        "gt": "weather",
+        "pred": "weather",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "palermo",
+        "pred": "palermo",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00926",
+      "incident_type": {
+        "gt": "parking",
+        "pred": "vandalism",
+        "match": false
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "milano",
+        "pred": "milano",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-03049",
+      "incident_type": {
+        "gt": "single_vehicle",
+        "pred": "single_vehicle",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "pescara",
+        "pred": "pescara",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-01117",
+      "incident_type": {
+        "gt": "weather",
+        "pred": "weather",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": false,
+        "match": false
+      },
+      "city": {
+        "gt": "roma",
+        "pred": "roma",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00642",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "roma",
+        "pred": "roma",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-04767",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": false,
+        "match": false
+      },
+      "city": {
+        "gt": "parma",
+        "pred": "parma",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00501",
+      "incident_type": {
+        "gt": "vandalism",
+        "pred": "vandalism",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "catania",
+        "pred": "catania",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-04066",
+      "incident_type": {
+        "gt": "single_vehicle",
+        "pred": "single_vehicle",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "bologna",
+        "pred": "bologna",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00333",
+      "incident_type": {
+        "gt": "vandalism",
+        "pred": "vandalism",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "roma",
+        "pred": "roma",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-04684",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "napoli",
+        "pred": "napoli",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00486",
+      "incident_type": {
+        "gt": "parking",
+        "pred": "vandalism",
+        "match": false
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "lecce",
+        "pred": "lecce",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-01962",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": true,
+        "pred": false,
+        "match": false
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "genova",
+        "pred": "genova",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00393",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "milano",
+        "pred": "milano",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-04842",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "torino",
+        "pred": "torino",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-04866",
+      "incident_type": {
+        "gt": "parking",
+        "pred": "vandalism",
+        "match": false
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "bari",
+        "pred": "bari",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-01755",
+      "incident_type": {
+        "gt": "theft",
+        "pred": "theft",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "torino",
+        "pred": "torino",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-02515",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": true,
+        "pred": false,
+        "match": false
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "roma",
+        "pred": "roma",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-03585",
+      "incident_type": {
+        "gt": "vandalism",
+        "pred": "vandalism",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "messina",
+        "pred": "messina",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-04315",
+      "incident_type": {
+        "gt": "vandalism",
+        "pred": "vandalism",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "taranto",
+        "pred": "taranto",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-04966",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "milano",
+        "pred": "milano",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-02099",
+      "incident_type": {
+        "gt": "parking",
+        "pred": "vandalism",
+        "match": false
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "catania",
+        "pred": "catania",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-03599",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "firenze",
+        "pred": "firenze",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-04121",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "bergamo",
+        "pred": "bergamo",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00029",
+      "incident_type": {
+        "gt": "collision",
+        "pred": "collision",
+        "match": true
+      },
+      "injuries": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "parma",
+        "pred": "parma",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00065",
+      "incident_type": {
+        "gt": "parking",
+        "pred": "vandalism",
+        "match": false
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": false,
+        "match": false
+      },
+      "city": {
+        "gt": "brescia",
+        "pred": "brescia",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-00838",
+      "incident_type": {
+        "gt": "hit_and_run",
+        "pred": "hit_and_run",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "padova",
+        "pred": "padova",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-03906",
+      "incident_type": {
+        "gt": "single_vehicle",
+        "pred": "single_vehicle",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "napoli",
+        "pred": "napoli",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-03773",
+      "incident_type": {
+        "gt": "hit_and_run",
+        "pred": "hit_and_run",
+        "match": true
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "city": {
+        "gt": "palermo",
+        "pred": "palermo",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-04635",
+      "incident_type": {
+        "gt": "parking",
+        "pred": "vandalism",
+        "match": false
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "bologna",
+        "pred": "bologna",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-03161",
+      "incident_type": {
+        "gt": "single_vehicle",
+        "pred": "single_vehicle",
+        "match": true
+      },
+      "injuries": {
+        "gt": true,
+        "pred": true,
+        "match": true
+      },
+      "police_report": {
+        "gt": true,
+        "pred": false,
+        "match": false
+      },
+      "city": {
+        "gt": "catania",
+        "pred": "",
+        "match": true
+      }
+    },
+    {
+      "claim_id": "CLM-02659",
+      "incident_type": {
+        "gt": "parking",
+        "pred": "vandalism",
+        "match": false
+      },
+      "injuries": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "police_report": {
+        "gt": false,
+        "pred": false,
+        "match": true
+      },
+      "city": {
+        "gt": "brescia",
+        "pred": "brescia",
+        "match": true
       }
     }
   ],
-  "incident_type_accuracy_pct": 0.0,
-  "injury_detection_accuracy_pct": 100.0,
-  "police_report_accuracy_pct": 100.0,
-  "city_accuracy_pct": 0.0
+  "incident_type_accuracy_pct": 80.0,
+  "injury_detection_accuracy_pct": 94.0,
+  "police_report_accuracy_pct": 90.0,
+  "city_accuracy_pct": 100.0
 }

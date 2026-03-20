@@ -1,32 +1,570 @@
 [
   {
     "claim_id": "CLM-01501",
-    "summary": "On January 27, 2-4am in Bologna, a Renault Captur from the policyholder's area was hit by an unknown vehicle resulting in broken headlight and crumpled fender; police report filed.",
+    "summary": "On 27/01/2022, a Renault Captur was hit by an unknown vehicle on Via Marconi in Bologna. The other driver fled the scene. The Captur sustained damage to its headlight and fender. A police report was filed.",
     "facts": {
       "incident_date": {
         "value": "27/01/2022",
         "confidence": "high",
-        "source_snippet": null
+        "source_snippet": "On 27/01/2022"
       },
       "incident_time": {
         "value": "00:12",
-        "confidence": "medium",
-        "source_snippet": null
+        "confidence": "high",
+        "source_snippet": "at 00:12"
       },
       "incident_location": {
-        "value": "Via Marconi in Bologna",
+        "value": "Via Marconi",
         "confidence": "high",
-        "source_snippet": null
+        "source_snippet": "on Via Marconi"
       },
       "incident_city": {
+        "value": "Bologna",
+        "confidence": "high",
+        "source_snippet": "in Bologna"
+      },
+      "incident_type": "hit_and_run",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "my Renault Captur...was hit by an unknown vehicle"
+      },
+      "other_vehicle": {
+        "value": "unknown",
+        "confidence": "medium",
+        "source_snippet": "by an unknown vehicle"
+      },
+      "damage_description": {
+        "value": "broken headlight and crumpled fender",
+        "confidence": "high",
+        "source_snippet": "broken headlight and crumpled fender"
+      },
+      "damage_areas": {
+        "value": "headlight, fender",
+        "confidence": "medium",
+        "source_snippet": "broken headlight and crumpled fender"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
         "value": null,
         "confidence": "unknown",
         "source_snippet": null
       },
-      "incident_type": "unknown",
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "I filed a police report. Police were called to the scene."
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-02586",
+    "summary": "Volkswagen Golf parked on Via Marconi, Torino was found with severe damage to the hood and grille on 19/07/2023.",
+    "facts": {
+      "incident_date": {
+        "value": "19/07/2023",
+        "confidence": "high",
+        "source_snippet": "19/07/2023"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Via Marconi",
+        "confidence": "high",
+        "source_snippet": "Via Marconi"
+      },
+      "incident_city": {
+        "value": "Torino",
+        "confidence": "high",
+        "source_snippet": "Torino"
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "severe damage to the hood and grille",
+        "confidence": "high",
+        "source_snippet": "hood and grille severely damaged"
+      },
+      "damage_areas": {
+        "value": "hood, grille",
+        "confidence": "medium",
+        "source_snippet": "hood and grille"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No witnesses"
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "medium",
+        "reason": "Time of incident can help determine when it occurred."
+      },
+      {
+        "field": "police_report_mentioned",
+        "importance": "high",
+        "reason": "Police report is crucial for vandalism claims."
+      }
+    ],
+    "language": "it",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-02653",
+    "summary": "On March 25, 2022 at around 6:19 PM, the policyholder was driving on Viale Monza in Rome when a Mercedes-Benz GLA rear-ended their BMW Serie 3 at a traffic light. The incident resulted in minor vehicle damage and the policyholder suffered back pain and a sprained wrist. A police report (number 3476/2022) was filed.",
+    "facts": {
+      "incident_date": {
+        "value": "25/03/2022",
+        "confidence": "high",
+        "source_snippet": "Incidente del 25/03/2022"
+      },
+      "incident_time": {
+        "value": "18:19",
+        "confidence": "medium",
+        "source_snippet": "ore 18:19 circa."
+      },
+      "incident_location": {
+        "value": "Viale Monza",
+        "confidence": "high",
+        "source_snippet": "stavo percorrendo Viale Monza"
+      },
+      "incident_city": {
+        "value": "Roma",
+        "confidence": "high",
+        "source_snippet": "a Roma"
+      },
+      "incident_type": "collision",
       "num_parties": {
         "value": "2",
+        "confidence": "high",
+        "source_snippet": "un veicolo Mercedes-Benz GLA mi ha tamponato"
+      },
+      "other_vehicle": {
+        "value": "Mercedes-Benz GLA",
+        "confidence": "high",
+        "source_snippet": "veicolo Mercedes-Benz GLA"
+      },
+      "damage_description": {
+        "value": "dented bumper and scratched paint",
         "confidence": "medium",
+        "source_snippet": "Danni: dented bumper and scratched paint."
+      },
+      "damage_areas": {
+        "value": "bumper, paint",
+        "confidence": "low",
+        "source_snippet": "Danni: dented bumper and scratched paint."
+      },
+      "injuries_reported": true,
+      "injury_severity": "moderate",
+      "injury_details": {
+        "value": "back pain and a sprained wrist",
+        "confidence": "medium",
+        "source_snippet": "I was taken to the hospital with back pain and a sprained wrist."
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "Report number 3476/2022 was filed."
+      },
+      "police_report_number": {
+        "value": "3476/2022",
+        "confidence": "high",
+        "source_snippet": "Report number 3476/2022"
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "it",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-01055",
+    "summary": "Lancia Ypsilon (2019) damaged in parking lot near airport, Modena on 11/07/2023. Front bumper pushed in, radiator possibly damaged. Hit-and-run incident.",
+    "facts": {
+      "incident_date": {
+        "value": "11/07/2023",
+        "confidence": "high",
+        "source_snippet": "on 11/07/2023"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "parking street near the airport parking",
+        "confidence": "medium",
+        "source_snippet": "in the parking street near the airport parking"
+      },
+      "incident_city": {
+        "value": "Modena",
+        "confidence": "high",
+        "source_snippet": "near Modena"
+      },
+      "incident_type": "hit_and_run",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "front bumper pushed in, radiator possibly damaged",
+        "confidence": "high",
+        "source_snippet": "front bumper pushed in, radiator possibly damaged"
+      },
+      "damage_areas": {
+        "value": "front bumper, radiator",
+        "confidence": "medium",
+        "source_snippet": "front bumper pushed in, radiator possibly damaged"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No note left by the responsible party"
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "low",
+        "reason": "Not critical for investigation"
+      }
+    ],
+    "language": "it",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00705",
+    "summary": "Alfa Romeo Giulietta hit by unknown vehicle on Via Togliatti in Genova, minor dent on door panel, no witnesses, police report filed.",
+    "facts": {
+      "incident_date": {
+        "value": "07/03/2021",
+        "confidence": "high",
+        "source_snippet": "On 07/03/2021"
+      },
+      "incident_time": {
+        "value": "21:26",
+        "confidence": "high",
+        "source_snippet": "at 21:26"
+      },
+      "incident_location": {
+        "value": "Via Togliatti",
+        "confidence": "high",
+        "source_snippet": "on Via Togliatti"
+      },
+      "incident_city": {
+        "value": "Genova",
+        "confidence": "high",
+        "source_snippet": "in Genova"
+      },
+      "incident_type": "hit_and_run",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "my Alfa Romeo Giulietta (2012) was hit by an unknown vehicle"
+      },
+      "other_vehicle": {
+        "value": "unknown",
+        "confidence": "low",
+        "source_snippet": "by an unknown vehicle"
+      },
+      "damage_description": {
+        "value": "minor dent on the door panel",
+        "confidence": "high",
+        "source_snippet": "minor dent on the door panel"
+      },
+      "damage_areas": {
+        "value": "door panel",
+        "confidence": "medium",
+        "source_snippet": "dent on the door panel"
+      },
+      "injuries_reported": false,
+      "injury_severity": "unknown",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "I filed a police report."
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No witnesses were present."
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00106",
+    "summary": "On April 16, 2023, the insured's BMW X1 was severely damaged due to flooding on Via Marconi in Salerno.",
+    "facts": {
+      "incident_date": {
+        "value": "16/04/2023",
+        "confidence": "high",
+        "source_snippet": "On 16/04/2023"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Via Marconi",
+        "confidence": "high",
+        "source_snippet": "Via Marconi"
+      },
+      "incident_city": {
+        "value": "Salerno",
+        "confidence": "high",
+        "source_snippet": "Salerno"
+      },
+      "incident_type": "weather",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "submerged up to the hood. Engine and electronics damaged. broken headlight and crumpled fender.",
+        "confidence": "high",
+        "source_snippet": "My BMW X1 (2024) was submerged up to the hood. Engine and electronics damaged. broken headlight and crumpled fender."
+      },
+      "damage_areas": {
+        "value": "hood, engine, electronics, headlight, fender",
+        "confidence": "high",
+        "source_snippet": "submerged up to the hood. Engine and electronics damaged. broken headlight and crumpled fender."
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "low",
+        "reason": "Not critical for processing the claim."
+      },
+      {
+        "field": "num_parties",
+        "importance": "medium",
+        "reason": "Could be useful to determine if other parties were involved in causing the flooding."
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00589",
+    "summary": "Alfa Romeo Giulietta vandalized while parked in Napoli, with dented bumper and scratched paint.",
+    "facts": {
+      "incident_date": {
+        "value": "10/03/2022",
+        "confidence": "high",
+        "source_snippet": "On 10/03/2022"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "A1 del Sole",
+        "confidence": "high",
+        "source_snippet": "while parked on A1 del Sole"
+      },
+      "incident_city": {
+        "value": "Napoli",
+        "confidence": "high",
+        "source_snippet": "in Napoli"
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "dented bumper and scratched paint",
+        "confidence": "high",
+        "source_snippet": "dented bumper and scratched paint"
+      },
+      "damage_areas": {
+        "value": "bumper, paint",
+        "confidence": "medium",
+        "source_snippet": "dented bumper and scratched paint"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "low",
+        "reason": "not critical for investigation"
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-02468",
+    "summary": "Fiat Panda (2015) damaged in parking garage, Roma on 08/08/2023. Broken headlight and crumpled fender, no note left by responsible party.",
+    "facts": {
+      "incident_date": {
+        "value": "08/08/2023",
+        "confidence": "high",
+        "source_snippet": "Found my Fiat Panda (2015) damaged on 08/08/2023"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "parking garage near the shopping center",
+        "confidence": "high",
+        "source_snippet": "in the parking garage near the shopping center"
+      },
+      "incident_city": {
+        "value": "Roma",
+        "confidence": "high",
+        "source_snippet": "near Roma"
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
         "source_snippet": null
       },
       "other_vehicle": {
@@ -37,11 +575,239 @@
       "damage_description": {
         "value": "broken headlight and crumpled fender",
         "confidence": "high",
+        "source_snippet": "broken headlight and crumpled fender"
+      },
+      "damage_areas": {
+        "value": "headlight, fender",
+        "confidence": "medium",
+        "source_snippet": "broken headlight and crumpled fender"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "low",
+        "reason": "Not critical for immediate action"
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-02413",
+    "summary": "Car vandalized with key marks and broken window in Lecce on 10/10/2023. No police report filed.",
+    "facts": {
+      "incident_date": {
+        "value": "10/10/2023",
+        "confidence": "high",
+        "source_snippet": "on 10/10/2023"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "near the shopping center",
+        "confidence": "medium",
+        "source_snippet": "Parked near the shopping center"
+      },
+      "incident_city": {
+        "value": "Lecce",
+        "confidence": "high",
+        "source_snippet": "in Lecce"
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "keyed and smashed window",
+        "confidence": "high",
+        "source_snippet": "Someone keyed my car and smashed the window"
+      },
+      "damage_areas": {
+        "value": "body, window",
+        "confidence": "medium",
+        "source_snippet": "keyed my car and smashed the window"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "We did not call the police"
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "low",
+        "reason": "Not critical for claim processing"
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-01600",
+    "summary": "A collision occurred on Viale Europa, Roma at 14:00 on 06/08/2023. The insured's Fiat Tipo was rear-ended by a Renault Clio, resulting in severe damage to the passenger side, hood, and grille. No injuries were reported, and a police report (number 6411/2023) was filed.",
+    "facts": {
+      "incident_date": {
+        "value": "06/08/2023",
+        "confidence": "high",
+        "source_snippet": "Collision occurred on 06/08/2023"
+      },
+      "incident_time": {
+        "value": "14:00",
+        "confidence": "high",
+        "source_snippet": "around 14:00"
+      },
+      "incident_location": {
+        "value": "Viale Europa",
+        "confidence": "high",
+        "source_snippet": "on Viale Europa"
+      },
+      "incident_city": {
+        "value": "Roma",
+        "confidence": "high",
+        "source_snippet": "on Viale Europa, Roma"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "I was proceeding normally when"
+      },
+      "other_vehicle": {
+        "value": "Renault Clio",
+        "confidence": "high",
+        "source_snippet": "Renault Clio rear-ended me"
+      },
+      "damage_description": {
+        "value": "severe damage to the passenger side, hood, and grille",
+        "confidence": "high",
+        "source_snippet": "Damage to passenger side. hood and grille severely damaged."
+      },
+      "damage_areas": {
+        "value": "passenger side, hood, grille",
+        "confidence": "high",
+        "source_snippet": "Damage to passenger side. hood and grille severely damaged."
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "Report number 6411/2023 was filed"
+      },
+      "police_report_number": {
+        "value": "6411/2023",
+        "confidence": "high",
+        "source_snippet": "Report number 6411/2023 was filed"
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-02464",
+    "summary": "Fiat Panda (2013) stolen from hospital in Catania on 28/09/2023, reported to police.",
+    "facts": {
+      "incident_date": {
+        "value": "28/09/2023",
+        "confidence": "high",
+        "source_snippet": "stolen on 28/09/2023"
+      },
+      "incident_time": {
+        "value": "21:28",
+        "confidence": "high",
+        "source_snippet": "around 21:28"
+      },
+      "incident_location": {
+        "value": "hospital",
+        "confidence": "medium",
+        "source_snippet": "from the hospital"
+      },
+      "incident_city": {
+        "value": "Catania",
+        "confidence": "high",
+        "source_snippet": "in Catania"
+      },
+      "incident_type": "theft",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": null,
+        "confidence": "unknown",
         "source_snippet": null
       },
       "damage_areas": {
-        "value": "headlights and fenders",
-        "confidence": "medium",
+        "value": null,
+        "confidence": "unknown",
         "source_snippet": null
       },
       "injuries_reported": false,
@@ -54,6 +820,1604 @@
       "police_report_mentioned": {
         "value": "yes",
         "confidence": "high",
+        "source_snippet": "I have filed a police report"
+      },
+      "police_report_number": {
+        "value": "3173/2023",
+        "confidence": "high",
+        "source_snippet": "report number 3173/2023"
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00228",
+    "summary": "A car accident occurred on 01/08/2021 in Catania where the insured's Opel Corsa was hit by another car, resulting in deep scratches along the entire right side.",
+    "facts": {
+      "incident_date": {
+        "value": "01/08/2021",
+        "confidence": "high",
+        "source_snippet": "Car accident on 01/08/2021"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_city": {
+        "value": "Catania",
+        "confidence": "high",
+        "source_snippet": "in Catania"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "other car hit me"
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "deep scratches along the entire right side",
+        "confidence": "high",
+        "source_snippet": "deep scratches along the entire right side"
+      },
+      "damage_areas": {
+        "value": "right side",
+        "confidence": "high",
+        "source_snippet": "entire right side"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_location",
+        "importance": "medium",
+        "reason": "To assist in further investigation"
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00915",
+    "summary": "On 1st August 2022, an Audi A3 was hit by a BMW Serie 3 at the intersection of Via Marconi and Corso Buenos Aires in Napoli while heading towards the station. The incident caused damage to the rear left quarter panel, cracked windshield, and roof dent. The driver sustained back pain and a sprained wrist.",
+    "facts": {
+      "incident_date": {
+        "value": "01/08/2022",
+        "confidence": "high",
+        "source_snippet": "On 01/08/2022"
+      },
+      "incident_time": {
+        "value": "21:11",
+        "confidence": "medium",
+        "source_snippet": "at approximately 21:11"
+      },
+      "incident_location": {
+        "value": "Via Marconi and Corso Buenos Aires intersection, Napoli",
+        "confidence": "high",
+        "source_snippet": "At the intersection with Corso Buenos Aires in Napoli"
+      },
+      "incident_city": {
+        "value": "Napoli",
+        "confidence": "high",
+        "source_snippet": "in Napoli"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "I was driving my Audi A3... heading towards the station. At the intersection with Corso Buenos Aires, the other vehicle (BMW Serie 3)..."
+      },
+      "other_vehicle": {
+        "value": "BMW Serie 3",
+        "confidence": "high",
+        "source_snippet": "the other vehicle (BMW Serie 3)"
+      },
+      "damage_description": {
+        "value": "cracked windshield and roof dent",
+        "confidence": "high",
+        "source_snippet": "The impact caused cracked windshield and roof dent."
+      },
+      "damage_areas": {
+        "value": "rear left quarter panel, windshield, roof",
+        "confidence": "medium",
+        "source_snippet": "hit my rear left quarter panel...cracked windshield and roof dent"
+      },
+      "injuries_reported": true,
+      "injury_severity": "moderate",
+      "injury_details": {
+        "value": "back pain and a sprained wrist",
+        "confidence": "high",
+        "source_snippet": "I was taken to the hospital with back pain and a sprained wrist"
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "I filed a report at the local police station."
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00794",
+    "summary": "Hailstorm damage to a 2020 Volkswagen Golf in Taranto on 16/10/2022, including multiple dents on the roof and hood, detached rear bumper, and broken taillight.",
+    "facts": {
+      "incident_date": {
+        "value": "16/10/2022",
+        "confidence": "high",
+        "source_snippet": "Hailstorm on 16/10/2022"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_city": {
+        "value": "Taranto",
+        "confidence": "high",
+        "source_snippet": "in Taranto"
+      },
+      "incident_type": "weather",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "multiple dents on roof and hood, rear bumper completely detached, taillight broken",
+        "confidence": "high",
+        "source_snippet": "Multiple dents on roof and hood of my Volkswagen Golf (2020). rear bumper completely detached, taillight broken."
+      },
+      "damage_areas": {
+        "value": "roof, hood, rear bumper, taillight",
+        "confidence": "high",
+        "source_snippet": "Multiple dents on roof and hood...rear bumper completely detached, taillight broken"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_location",
+        "importance": "medium",
+        "reason": "To provide a more detailed location of the incident"
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-03021",
+    "summary": "Alfa Romeo Stelvio stolen in Rome on 03/09/2022. Police report filed.",
+    "facts": {
+      "incident_date": {
+        "value": "03/09/2022",
+        "confidence": "high",
+        "source_snippet": "Vehicle stolen, 03/09/2022"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Roma",
+        "confidence": "high",
+        "source_snippet": "Vehicle stolen, 03/09/2022, Roma"
+      },
+      "incident_city": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_type": "theft",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_areas": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "injuries_reported": false,
+      "injury_severity": "unknown",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "Police report filed."
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-03543",
+    "summary": "Ford Focus (2022) stolen from apartment building in Sassari, reported to police.",
+    "facts": {
+      "incident_date": {
+        "value": "02/03/2024",
+        "confidence": "high",
+        "source_snippet": "stolen on 02/03/2024"
+      },
+      "incident_time": {
+        "value": "08:42",
+        "confidence": "high",
+        "source_snippet": "around 08:42"
+      },
+      "incident_location": {
+        "value": "apartment building",
+        "confidence": "medium",
+        "source_snippet": "from my apartment building"
+      },
+      "incident_city": {
+        "value": "Sassari",
+        "confidence": "high",
+        "source_snippet": "in Sassari"
+      },
+      "incident_type": "theft",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_areas": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "I have filed a police report"
+      },
+      "police_report_number": {
+        "value": "6900/2024",
+        "confidence": "high",
+        "source_snippet": "report number 6900/2024"
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-01073",
+    "summary": "On March 15, 2022, the insured's Peugeot 208 was rear-ended at a traffic light on Via Emilia in Bologna. The other driver caused damage to the bumper and taillight. A police report (9310/2022) was filed.",
+    "facts": {
+      "incident_date": {
+        "value": "15/03/2022",
+        "confidence": "high",
+        "source_snippet": "Accident 15/03/2022"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Via Emilia",
+        "confidence": "medium",
+        "source_snippet": "Via Emilia Bologna"
+      },
+      "incident_city": {
+        "value": "Bologna",
+        "confidence": "high",
+        "source_snippet": "Bologna"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "The other driver rear-ended me"
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "bumper and taillight damaged",
+        "confidence": "high",
+        "source_snippet": "Bumper and taillight damaged"
+      },
+      "damage_areas": {
+        "value": "bumper, taillight",
+        "confidence": "high",
+        "source_snippet": "Bumper and taillight damaged"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "Report number 9310/2022 was filed"
+      },
+      "police_report_number": {
+        "value": "9310/2022",
+        "confidence": "high",
+        "source_snippet": "Report number 9310/2022 was filed"
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-03351",
+    "summary": "On April 11, 2022 at around 5:33 PM, the insured was driving their Fiat Panda on Via Kennedy in Bologna when a Fiat Punto rear-ended them at a traffic light. The incident resulted in damage to the wheel arch and tire of the insured's vehicle, as well as minor whiplash injuries for the insured who sought medical attention as a precaution. A police report was filed with number 8664/2022.",
+    "facts": {
+      "incident_date": {
+        "value": "11/04/2022",
+        "confidence": "high",
+        "source_snippet": "Incidente del 11/04/2022"
+      },
+      "incident_time": {
+        "value": "17:33",
+        "confidence": "high",
+        "source_snippet": "ore 17:33 circa."
+      },
+      "incident_location": {
+        "value": "Via Kennedy",
+        "confidence": "high",
+        "source_snippet": "stavo percorrendo Via Kennedy"
+      },
+      "incident_city": {
+        "value": "Bologna",
+        "confidence": "high",
+        "source_snippet": "a Bologna"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "un veicolo Fiat Punto mi ha tamponato"
+      },
+      "other_vehicle": {
+        "value": "Fiat Punto",
+        "confidence": "high",
+        "source_snippet": "veicolo Fiat Punto"
+      },
+      "damage_description": {
+        "value": "wheel arch crushed, tire blown",
+        "confidence": "high",
+        "source_snippet": "danni: wheel arch crushed, tire blown."
+      },
+      "damage_areas": {
+        "value": "wheel arch, tire",
+        "confidence": "high",
+        "source_snippet": "danni: wheel arch crushed, tire blown."
+      },
+      "injuries_reported": true,
+      "injury_severity": "minor",
+      "injury_details": {
+        "value": "minor whiplash, went to the ER as a precaution",
+        "confidence": "high",
+        "source_snippet": "Minor whiplash, went to the ER as a precaution."
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "Report number 8664/2022 was filed."
+      },
+      "police_report_number": {
+        "value": "8664/2022",
+        "confidence": "high",
+        "source_snippet": "Report number 8664/2022"
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "it",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-01744",
+    "summary": "Vehicle stolen in Parma on 11/03/2024. Police report filed.",
+    "facts": {
+      "incident_date": {
+        "value": "11/03/2024",
+        "confidence": "high",
+        "source_snippet": "11/03/2024"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Parma",
+        "confidence": "high",
+        "source_snippet": "Parma"
+      },
+      "incident_city": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_type": "theft",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_areas": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "injuries_reported": false,
+      "injury_severity": "unknown",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "Police report filed."
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-01084",
+    "summary": "Hailstorm damage to Dacia Sandero in Palermo on 02/05/2022, including multiple dents on roof and hood, detached rear bumper, and broken taillight.",
+    "facts": {
+      "incident_date": {
+        "value": "02/05/2022",
+        "confidence": "high",
+        "source_snippet": "Hailstorm on 02/05/2022"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_city": {
+        "value": "Palermo",
+        "confidence": "high",
+        "source_snippet": "Hailstorm on 02/05/2022, Palermo"
+      },
+      "incident_type": "weather",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "multiple dents on roof and hood, rear bumper completely detached, taillight broken",
+        "confidence": "high",
+        "source_snippet": "Multiple dents on roof and hood of my Dacia Sandero (2019). rear bumper completely detached, taillight broken."
+      },
+      "damage_areas": {
+        "value": "roof, hood, rear bumper, taillight",
+        "confidence": "high",
+        "source_snippet": "Multiple dents on roof and hood of my Dacia Sandero (2019). rear bumper completely detached, taillight broken."
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_location",
+        "importance": "medium",
+        "reason": "To provide more context about the incident."
+      },
+      {
+        "field": "police_report_mentioned",
+        "importance": "low",
+        "reason": "Not relevant for weather-related incidents."
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00926",
+    "summary": "Car parked on Via Roma in Milano was found with a crushed wheel arch and blown tire on 19/09/2023. No witnesses were present.",
+    "facts": {
+      "incident_date": {
+        "value": "19/09/2023",
+        "confidence": "high",
+        "source_snippet": "on 19/09/2023"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Via Roma",
+        "confidence": "high",
+        "source_snippet": "on Via Roma"
+      },
+      "incident_city": {
+        "value": "Milano",
+        "confidence": "high",
+        "source_snippet": "in Milano"
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "wheel arch crushed, tire blown",
+        "confidence": "high",
+        "source_snippet": "found wheel arch crushed, tire blown"
+      },
+      "damage_areas": {
+        "value": "wheel arch, tire",
+        "confidence": "medium",
+        "source_snippet": "wheel arch crushed, tire blown"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No witnesses were present."
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "low",
+        "reason": "Not critical for investigation"
+      }
+    ],
+    "language": "it",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-03049",
+    "summary": "The policyholder was driving home on 17/08/2022 around 10:30 when they skidded due to wet roads, causing deep scratches along the entire right side of their Peugeot 208.",
+    "facts": {
+      "incident_date": {
+        "value": "17/08/2022",
+        "confidence": "high",
+        "source_snippet": "Driving home on 17/08/2022"
+      },
+      "incident_time": {
+        "value": "10:30",
+        "confidence": "high",
+        "source_snippet": "around 10:30"
+      },
+      "incident_location": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_city": {
+        "value": "Pescara",
+        "confidence": "medium",
+        "source_snippet": "Policyholder city: Pescara"
+      },
+      "incident_type": "single_vehicle",
+      "num_parties": {
+        "value": "1",
+        "confidence": "high",
+        "source_snippet": "The policyholder was driving home"
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "deep scratches along the entire right side",
+        "confidence": "high",
+        "source_snippet": "causing deep scratches along the entire right side"
+      },
+      "damage_areas": {
+        "value": "right side",
+        "confidence": "high",
+        "source_snippet": "entire right side"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_location",
+        "importance": "medium",
+        "reason": "To assist in claim processing and potential repair coordination"
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-01117",
+    "summary": "On December 26, 2023, a severe flooding incident occurred on Via Emilia in Roma, causing significant damage to the insured's 2021 Renault Captur.",
+    "facts": {
+      "incident_date": {
+        "value": "26/12/2023",
+        "confidence": "high",
+        "source_snippet": "On 26/12/2023"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Via Emilia",
+        "confidence": "high",
+        "source_snippet": "on Via Emilia"
+      },
+      "incident_city": {
+        "value": "Roma",
+        "confidence": "high",
+        "source_snippet": "in Roma"
+      },
+      "incident_type": "weather",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "submerged up to the windows. Engine and electronics damaged.",
+        "confidence": "high",
+        "source_snippet": "My Renault Captur (2021) was submerged up to the windows. Engine and electronics damaged."
+      },
+      "damage_areas": {
+        "value": "entire right side",
+        "confidence": "high",
+        "source_snippet": "deep scratches along the entire right side"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "low",
+        "reason": "Not critical for claim processing."
+      },
+      {
+        "field": "num_parties",
+        "importance": "medium",
+        "reason": "Could provide context if other vehicles were involved."
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00642",
+    "summary": "A collision occurred on 22/01/2022 at 16:13 on SS36, Roma. The insured's Audi A3 was rear-ended by a Peugeot 208 while turning left, resulting in significant body damage to the right side and driver side.",
+    "facts": {
+      "incident_date": {
+        "value": "22/01/2022",
+        "confidence": "high",
+        "source_snippet": "Collision occurred on 22/01/2022"
+      },
+      "incident_time": {
+        "value": "16:13",
+        "confidence": "high",
+        "source_snippet": "around 16:13"
+      },
+      "incident_location": {
+        "value": "SS36",
+        "confidence": "medium",
+        "source_snippet": "on SS36"
+      },
+      "incident_city": {
+        "value": "Roma",
+        "confidence": "high",
+        "source_snippet": "Roma"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "I was turning left when Peugeot 208 rear-ended me"
+      },
+      "other_vehicle": {
+        "value": "Peugeot 208",
+        "confidence": "high",
+        "source_snippet": "Peugeot 208"
+      },
+      "damage_description": {
+        "value": "significant body damage on the right side and driver side",
+        "confidence": "medium",
+        "source_snippet": "Damage to right side. significant body damage on the driver side."
+      },
+      "damage_areas": {
+        "value": "right side, driver side",
+        "confidence": "high",
+        "source_snippet": "Damage to right side. significant body damage on the driver side."
+      },
+      "injuries_reported": false,
+      "injury_severity": "unknown",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No police report was filed"
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_province",
+        "importance": "medium",
+        "reason": "To provide a more precise location"
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-04767",
+    "summary": "A collision occurred on Via Emilia, Parma at 02:33 on 22/05/2023 involving a Fiat Panda. The other driver exchanged information. Extensive damage includes a dented bumper and scratched paint.",
+    "facts": {
+      "incident_date": {
+        "value": "22/05/2023",
+        "confidence": "high",
+        "source_snippet": "On 22/05/2023"
+      },
+      "incident_time": {
+        "value": "02:33",
+        "confidence": "high",
+        "source_snippet": "at 02:33"
+      },
+      "incident_location": {
+        "value": "Via Emilia",
+        "confidence": "high",
+        "source_snippet": "on Via Emilia"
+      },
+      "incident_city": {
+        "value": "Parma",
+        "confidence": "high",
+        "source_snippet": "in Parma"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "The other driver and I exchanged information."
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "dented bumper and scratched paint",
+        "confidence": "high",
+        "source_snippet": "My car has extensive damage: dented bumper and scratched paint."
+      },
+      "damage_areas": {
+        "value": "bumper, paint",
+        "confidence": "high",
+        "source_snippet": "dented bumper and scratched paint"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00501",
+    "summary": "Car vandalized with keyed paintwork and smashed window in Catania on 12/04/2023, no police report filed.",
+    "facts": {
+      "incident_date": {
+        "value": "12/04/2023",
+        "confidence": "high",
+        "source_snippet": "on 12/04/2023"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "near the gym",
+        "confidence": "medium",
+        "source_snippet": "Parked near the gym"
+      },
+      "incident_city": {
+        "value": "Catania",
+        "confidence": "high",
+        "source_snippet": "in Catania"
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "keyed paintwork and smashed window",
+        "confidence": "high",
+        "source_snippet": "Someone keyed my car and smashed the window"
+      },
+      "damage_areas": {
+        "value": "paintwork, window",
+        "confidence": "medium",
+        "source_snippet": "keyed...smashed the window"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No police report was filed"
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "low",
+        "reason": "Not critical for claim processing"
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-04066",
+    "summary": "Vehicle skidded into a ditch due to flooded road, causing severe damage to the hood and grille.",
+    "facts": {
+      "incident_date": {
+        "value": "04/07/2021",
+        "confidence": "high",
+        "source_snippet": "Driving home on 04/07/2021"
+      },
+      "incident_time": {
+        "value": "00:24",
+        "confidence": "high",
+        "source_snippet": "around 00:24"
+      },
+      "incident_location": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_city": {
+        "value": "Bologna",
+        "confidence": "medium",
+        "source_snippet": "Policyholder city: Bologna"
+      },
+      "incident_type": "single_vehicle",
+      "num_parties": {
+        "value": "1",
+        "confidence": "high",
+        "source_snippet": "I skidded into a ditch."
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "hood and grille severely damaged.",
+        "confidence": "high",
+        "source_snippet": "hood and grille severely damaged."
+      },
+      "damage_areas": {
+        "value": "hood, grille",
+        "confidence": "high",
+        "source_snippet": "hood and grille"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_location",
+        "importance": "medium",
+        "reason": "To assist in claim processing and potential road safety improvements."
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00333",
+    "summary": "Car vandalized with key marks and slashed tire near shopping center in Roma on 09/03/2024. No police report filed.",
+    "facts": {
+      "incident_date": {
+        "value": "09/03/2024",
+        "confidence": "high",
+        "source_snippet": "on 09/03/2024"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "near the shopping center",
+        "confidence": "medium",
+        "source_snippet": "near the shopping center"
+      },
+      "incident_city": {
+        "value": "Roma",
+        "confidence": "high",
+        "source_snippet": "in Roma"
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "keyed and tire slashed",
+        "confidence": "high",
+        "source_snippet": "keyed my car and slashed a tire"
+      },
+      "damage_areas": {
+        "value": "body, tire",
+        "confidence": "medium",
+        "source_snippet": "keyed my car and slashed a tire"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No police report was filed"
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "low",
+        "reason": "Not critical for claim processing"
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-04684",
+    "summary": "On 08/02/2023 at around 14:26, a collision occurred in Napoli between a Jeep Renegade and an Alfa Romeo Giulietta at the intersection of Via Mazzini and Via dei Mille. The impact caused the rear bumper to detach completely and the taillight to break.",
+    "facts": {
+      "incident_date": {
+        "value": "08/02/2023",
+        "confidence": "high",
+        "source_snippet": "On 08/02/2023"
+      },
+      "incident_time": {
+        "value": "14:26",
+        "confidence": "medium",
+        "source_snippet": "at approximately 14:26"
+      },
+      "incident_location": {
+        "value": "Via Mazzini and Via dei Mille",
+        "confidence": "high",
+        "source_snippet": "at the intersection with Via dei Mille"
+      },
+      "incident_city": {
+        "value": "Napoli",
+        "confidence": "high",
+        "source_snippet": "in Napoli"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "between a Jeep Renegade and an Alfa Romeo Giulietta"
+      },
+      "other_vehicle": {
+        "value": "Alfa Romeo Giulietta",
+        "confidence": "high",
+        "source_snippet": "the other vehicle (Alfa Romeo Giulietta)"
+      },
+      "damage_description": {
+        "value": "rear bumper completely detached, taillight broken",
+        "confidence": "high",
+        "source_snippet": "caused the rear bumper to detach completely and the taillight to break."
+      },
+      "damage_areas": {
+        "value": "rear bumper, taillight",
+        "confidence": "high",
+        "source_snippet": "rear bumper... taillight"
+      },
+      "injuries_reported": false,
+      "injury_severity": "unknown",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": "no",
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00486",
+    "summary": "Volkswagen Golf (2016) damaged in parking area near hospital in Lecce on 23/12/2021, wheel arch crushed, tire blown. No note left by responsible party.",
+    "facts": {
+      "incident_date": {
+        "value": "23/12/2021",
+        "confidence": "high",
+        "source_snippet": "Found my Volkswagen Golf (2016) damaged on 23/12/2021 in the parking area near the hospital, Lecce."
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "parking area near the hospital",
+        "confidence": "high",
+        "source_snippet": "Found my Volkswagen Golf (2016) damaged on 23/12/2021 in the parking area near the hospital, Lecce."
+      },
+      "incident_city": {
+        "value": "Lecce",
+        "confidence": "high",
+        "source_snippet": "Found my Volkswagen Golf (2016) damaged on 23/12/2021 in the parking area near the hospital, Lecce."
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "wheel arch crushed, tire blown",
+        "confidence": "high",
+        "source_snippet": "Found my Volkswagen Golf (2016) damaged on 23/12/2021 in the parking area near the hospital, Lecce. wheel arch crushed, tire blown."
+      },
+      "damage_areas": {
+        "value": "wheel arch, tire",
+        "confidence": "high",
+        "source_snippet": "Found my Volkswagen Golf (2016) damaged on 23/12/2021 in the parking area near the hospital, Lecce. wheel arch crushed, tire blown."
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "low",
+        "reason": "Not critical for investigation."
+      },
+      {
+        "field": "num_parties",
+        "importance": "medium",
+        "reason": "Could help identify responsible party."
+      },
+      {
+        "field": "other_vehicle",
+        "importance": "low",
+        "reason": "Not mentioned in description."
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-01962",
+    "summary": "A rear-end collision occurred on Via XX Settembre in Genova on 12/07/2022, damaging the bumper and taillight of the insured's Toyota RAV4. The Carabinieri arrived at the scene and filed a report.",
+    "facts": {
+      "incident_date": {
+        "value": "12/07/2022",
+        "confidence": "high",
+        "source_snippet": "Accident 12/07/2022"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Via XX Settembre",
+        "confidence": "high",
+        "source_snippet": "Via XX Settembre Genova"
+      },
+      "incident_city": {
+        "value": "Genova",
+        "confidence": "high",
+        "source_snippet": "Genova"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "The other driver rear-ended me"
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "bumper and taillight damaged",
+        "confidence": "high",
+        "source_snippet": "Bumper and taillight damaged"
+      },
+      "damage_areas": {
+        "value": "bumper, taillight",
+        "confidence": "high",
+        "source_snippet": "Bumper and taillight damaged"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "The Carabinieri arrived and filed a report"
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00393",
+    "summary": "On June 29th, 2021 at around 8:01 PM, the insured was driving their Fiat 500 on Corso Italia in Milan when a Hyundai i20 rear-ended them at a traffic light. The incident resulted in significant damage to the driver's side of the vehicle and multiple injuries requiring hospitalization for two days.",
+    "facts": {
+      "incident_date": {
+        "value": "29/06/2021",
+        "confidence": "high",
+        "source_snippet": "Incidente del 29/06/2021"
+      },
+      "incident_time": {
+        "value": "20:01",
+        "confidence": "medium",
+        "source_snippet": "ore 20:01 circa."
+      },
+      "incident_location": {
+        "value": "Corso Italia",
+        "confidence": "high",
+        "source_snippet": "stavo percorrendo Corso Italia"
+      },
+      "incident_city": {
+        "value": "Milano",
+        "confidence": "high",
+        "source_snippet": "a Milano"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "un veicolo Hyundai i20 mi ha tamponato"
+      },
+      "other_vehicle": {
+        "value": "Hyundai i20",
+        "confidence": "high",
+        "source_snippet": "veicolo Hyundai i20"
+      },
+      "damage_description": {
+        "value": "significant body damage on the driver side",
+        "confidence": "medium",
+        "source_snippet": "Danni: significant body damage on the driver side."
+      },
+      "damage_areas": {
+        "value": "driver's side",
+        "confidence": "low",
+        "source_snippet": "driver's side"
+      },
+      "injuries_reported": true,
+      "injury_severity": "moderate",
+      "injury_details": {
+        "value": "Multiple injuries, I was hospitalized for two days.",
+        "confidence": "high",
+        "source_snippet": "Multiple injuries, I was hospitalized for two days."
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
         "source_snippet": null
       },
       "police_report_number": {
@@ -67,19 +2431,1362 @@
         "source_snippet": null
       }
     },
+    "missing_info": [],
+    "language": "it",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-04842",
+    "summary": "On 21/04/2022, the policyholder's Toyota Corolla was hit by another vehicle on Via Cavour in Torino. The incident resulted in a cracked windshield and roof dent, but no injuries were reported.",
+    "facts": {
+      "incident_date": {
+        "value": "21/04/2022",
+        "confidence": "high",
+        "source_snippet": "on 21/04/2022"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Via Cavour",
+        "confidence": "high",
+        "source_snippet": "on Via Cavour"
+      },
+      "incident_city": {
+        "value": "Torino",
+        "confidence": "high",
+        "source_snippet": "in Torino"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "this guy just came out of nowhere and hit my car"
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "cracked windshield and roof dent",
+        "confidence": "high",
+        "source_snippet": "the damage is pretty bad, cracked windshield and roof dent"
+      },
+      "damage_areas": {
+        "value": "windshield, roof",
+        "confidence": "medium",
+        "source_snippet": "cracked windshield and roof dent"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
     "missing_info": [
       {
-        "field": "incident_city",
-        "importance": "medium",
-        "reason": "The policyholder's city is Padova, but the incident occurred in Bologna."
-      },
-      {
-        "field": "other_vehicle",
-        "importance": "high",
-        "reason": "Details of other vehicle involved are missing which could affect claim processing and investigation."
+        "field": "incident_time",
+        "importance": "low",
+        "reason": "not critical for claim processing"
       }
     ],
     "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-04866",
+    "summary": "Car parked on Via Emilia in Bari was found with significant body damage on the driver side on 21/03/2021.",
+    "facts": {
+      "incident_date": {
+        "value": "21/03/2021",
+        "confidence": "high",
+        "source_snippet": "21/03/2021"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Via Emilia",
+        "confidence": "high",
+        "source_snippet": "Via Emilia"
+      },
+      "incident_city": {
+        "value": "Bari",
+        "confidence": "high",
+        "source_snippet": "Bari"
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "significant body damage on the driver side",
+        "confidence": "high",
+        "source_snippet": "significant body damage on the driver side"
+      },
+      "damage_areas": {
+        "value": "driver side",
+        "confidence": "high",
+        "source_snippet": "driver side"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No witnesses"
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "medium",
+        "reason": "To provide a complete timeline of events."
+      },
+      {
+        "field": "police_report_mentioned",
+        "importance": "high",
+        "reason": "To determine if further investigation is needed."
+      }
+    ],
+    "language": "it",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-01755",
+    "summary": "Volkswagen Polo stolen from gym in Torino on 12/12/2021, reported to police.",
+    "facts": {
+      "incident_date": {
+        "value": "12/12/2021",
+        "confidence": "high",
+        "source_snippet": "on 12/12/2021"
+      },
+      "incident_time": {
+        "value": "09:10",
+        "confidence": "high",
+        "source_snippet": "around 09:10"
+      },
+      "incident_location": {
+        "value": "gym",
+        "confidence": "medium",
+        "source_snippet": "from the gym"
+      },
+      "incident_city": {
+        "value": "Torino",
+        "confidence": "high",
+        "source_snippet": "in Torino"
+      },
+      "incident_type": "theft",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_areas": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "I have filed a police report"
+      },
+      "police_report_number": {
+        "value": "3310/2021",
+        "confidence": "high",
+        "source_snippet": "report number 3310/2021"
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-02515",
+    "summary": "On 01/06/2022, a rear-end collision occurred at Corso Vittorio Emanuele in Roma. The insured's Renault Clio sustained bumper and taillight damage.",
+    "facts": {
+      "incident_date": {
+        "value": "01/06/2022",
+        "confidence": "high",
+        "source_snippet": "Accident 01/06/2022"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Corso Vittorio Emanuele",
+        "confidence": "high",
+        "source_snippet": "Corso Vittorio Emanuele Roma"
+      },
+      "incident_city": {
+        "value": "Roma",
+        "confidence": "high",
+        "source_snippet": "Roma"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "The other driver rear-ended me"
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "bumper and taillight damaged",
+        "confidence": "high",
+        "source_snippet": "Bumper and taillight damaged"
+      },
+      "damage_areas": {
+        "value": "bumper, taillight",
+        "confidence": "high",
+        "source_snippet": "Bumper and taillight damaged"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "I filed a report at the local police station"
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-03585",
+    "summary": "Car vandalism incident on 13/12/2023 in Messina, with side mirror damage.",
+    "facts": {
+      "incident_date": {
+        "value": "13/12/2023",
+        "confidence": "high",
+        "source_snippet": "on 13/12/2023"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "near my apartment building",
+        "confidence": "medium",
+        "source_snippet": "Parked near my apartment building"
+      },
+      "incident_city": {
+        "value": "Messina",
+        "confidence": "high",
+        "source_snippet": "in Messina"
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "side mirror broken",
+        "confidence": "high",
+        "source_snippet": "broke my side mirror"
+      },
+      "damage_areas": {
+        "value": "side mirror",
+        "confidence": "high",
+        "source_snippet": "broke my side mirror"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No police report was filed"
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "low",
+        "reason": "Not critical for investigation"
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-04315",
+    "summary": "Jeep Renegade vandalized in Taranto, bumper dented and paint scratched. Carabinieri report filed.",
+    "facts": {
+      "incident_date": {
+        "value": "25/09/2021",
+        "confidence": "high",
+        "source_snippet": "On 25/09/2021"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Via Matteotti",
+        "confidence": "high",
+        "source_snippet": "on Via Matteotti"
+      },
+      "incident_city": {
+        "value": "Taranto",
+        "confidence": "high",
+        "source_snippet": "in Taranto"
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "dented bumper and scratched paint",
+        "confidence": "high",
+        "source_snippet": "dented bumper and scratched paint"
+      },
+      "damage_areas": {
+        "value": "bumper, paint",
+        "confidence": "medium",
+        "source_snippet": "dented bumper and scratched paint"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "The Carabinieri arrived and filed a report"
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-04966",
+    "summary": "On February 8, 2023 at around 15:10, a Fiat Punto rear-ended the insured's Jeep Renegade while driving on Via Cavour in Milan. Minor damage to the door panel was reported, with no injuries and no police report filed.",
+    "facts": {
+      "incident_date": {
+        "value": "08/02/2023",
+        "confidence": "high",
+        "source_snippet": "Incidente del 08/02/2023"
+      },
+      "incident_time": {
+        "value": "15:10",
+        "confidence": "high",
+        "source_snippet": "ore 15:10 circa."
+      },
+      "incident_location": {
+        "value": "Via Cavour",
+        "confidence": "high",
+        "source_snippet": "stavo percorrendo Via Cavour"
+      },
+      "incident_city": {
+        "value": "Milano",
+        "confidence": "high",
+        "source_snippet": "a Milano"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "un veicolo Fiat Punto mi ha tamponato"
+      },
+      "other_vehicle": {
+        "value": "Fiat Punto",
+        "confidence": "high",
+        "source_snippet": "veicolo Fiat Punto"
+      },
+      "damage_description": {
+        "value": "minor dent on the door panel",
+        "confidence": "high",
+        "source_snippet": "Danni: minor dent on the door panel."
+      },
+      "damage_areas": {
+        "value": "door panel",
+        "confidence": "high",
+        "source_snippet": "dent on the door panel"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No police report was filed."
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "it",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-02099",
+    "summary": "The insured's parked Mercedes-Benz GLA in Via Mazzini, Catania was found with a completely detached rear bumper and broken taillight on 17/06/2024. No witnesses were present.",
+    "facts": {
+      "incident_date": {
+        "value": "17/06/2024",
+        "confidence": "high",
+        "source_snippet": "on 17/06/2024"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Via Mazzini, Catania",
+        "confidence": "high",
+        "source_snippet": "on Via Mazzini, Catania"
+      },
+      "incident_city": {
+        "value": "Catania",
+        "confidence": "high",
+        "source_snippet": "in Catania"
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "rear bumper completely detached, taillight broken",
+        "confidence": "high",
+        "source_snippet": "rear bumper completely detached, taillight broken"
+      },
+      "damage_areas": {
+        "value": "rear bumper, taillight",
+        "confidence": "medium",
+        "source_snippet": "rear bumper completely detached, taillight broken"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No witnesses."
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No witnesses."
+      }
+    },
+    "missing_info": [],
+    "language": "it",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-03599",
+    "summary": "On 04/03/2023, the insured's Renault Clio was hit by a Peugeot 308 at an intersection in Florence, causing damage to the rear bumper and taillight, and minor injuries to the driver.",
+    "facts": {
+      "incident_date": {
+        "value": "04/03/2023",
+        "confidence": "high",
+        "source_snippet": "On 04/03/2023"
+      },
+      "incident_time": {
+        "value": "00:39",
+        "confidence": "medium",
+        "source_snippet": "at approximately 00:39"
+      },
+      "incident_location": {
+        "value": "Via della Repubblica",
+        "confidence": "high",
+        "source_snippet": "along Via della Repubblica"
+      },
+      "incident_city": {
+        "value": "Firenze",
+        "confidence": "high",
+        "source_snippet": "in Firenze"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "the other vehicle (Peugeot 308)"
+      },
+      "other_vehicle": {
+        "value": "Peugeot 308",
+        "confidence": "high",
+        "source_snippet": "the other vehicle (Peugeot 308)"
+      },
+      "damage_description": {
+        "value": "rear bumper completely detached, taillight broken",
+        "confidence": "high",
+        "source_snippet": "caused rear bumper completely detached, taillight broken"
+      },
+      "damage_areas": {
+        "value": "rear bumper, taillight",
+        "confidence": "high",
+        "source_snippet": "rear bumper completely detached, taillight broken"
+      },
+      "injuries_reported": true,
+      "injury_severity": "minor",
+      "injury_details": {
+        "value": "neck pain",
+        "confidence": "medium",
+        "source_snippet": "I experienced some neck pain afterwards"
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "The Carabinieri arrived and filed a report."
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": "yes",
+        "confidence": "medium",
+        "source_snippet": "There were several witnesses at the scene"
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-04121",
+    "summary": "On 01/08/2023, a collision occurred at the intersection of Via Gramsci and Via Manzoni in Bergamo when a Jeep Renegade failed to yield, hitting a Fiat Punto on its passenger side. The impact damaged the wheel arch and tire, injuring a passenger in the other car.",
+    "facts": {
+      "incident_date": {
+        "value": "01/08/2023",
+        "confidence": "high",
+        "source_snippet": "On 01/08/2023"
+      },
+      "incident_time": {
+        "value": "19:38",
+        "confidence": "medium",
+        "source_snippet": "at approximately 19:38"
+      },
+      "incident_location": {
+        "value": "Via Gramsci and Via Manzoni",
+        "confidence": "high",
+        "source_snippet": "intersection with Via Manzoni"
+      },
+      "incident_city": {
+        "value": "Bergamo",
+        "confidence": "high",
+        "source_snippet": "in Bergamo"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "two vehicles involved"
+      },
+      "other_vehicle": {
+        "value": "Jeep Renegade",
+        "confidence": "high",
+        "source_snippet": "the other vehicle (Jeep Renegade)"
+      },
+      "damage_description": {
+        "value": "wheel arch crushed, tire blown",
+        "confidence": "high",
+        "source_snippet": "caused wheel arch crushed, tire blown"
+      },
+      "damage_areas": {
+        "value": "wheel arch, tire",
+        "confidence": "high",
+        "source_snippet": "wheel arch crushed, tire blown"
+      },
+      "injuries_reported": true,
+      "injury_severity": "moderate",
+      "injury_details": {
+        "value": "passenger in the other car was injured and taken by ambulance",
+        "confidence": "high",
+        "source_snippet": "passenger in the other car was injured and taken by ambulance"
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "Report number 3010/2023 was filed."
+      },
+      "police_report_number": {
+        "value": "3010/2023",
+        "confidence": "high",
+        "source_snippet": "Report number 3010/2023"
+      },
+      "witnesses_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "A pedestrian witnessed the accident and left their contact info."
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00029",
+    "summary": "On March 4, 2024 at around 7:18 PM, the policyholder was driving their Audi Q3 on Corso Vittorio Emanuele in Parma when a Jeep Renegade rear-ended them at a traffic light. The incident resulted in a broken headlight and crumpled fender for the Audi, and serious leg injuries to the policyholder. The Carabinieri arrived and filed a report.",
+    "facts": {
+      "incident_date": {
+        "value": "04/03/2024",
+        "confidence": "high",
+        "source_snippet": "Incidente del 04/03/2024"
+      },
+      "incident_time": {
+        "value": "19:18",
+        "confidence": "high",
+        "source_snippet": "ore 19:18 circa."
+      },
+      "incident_location": {
+        "value": "Corso Vittorio Emanuele",
+        "confidence": "high",
+        "source_snippet": "stavo percorrendo Corso Vittorio Emanuele"
+      },
+      "incident_city": {
+        "value": "Parma",
+        "confidence": "high",
+        "source_snippet": "a Parma"
+      },
+      "incident_type": "collision",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "un veicolo Jeep Renegade mi ha tamponato"
+      },
+      "other_vehicle": {
+        "value": "Jeep Renegade",
+        "confidence": "high",
+        "source_snippet": "veicolo Jeep Renegade"
+      },
+      "damage_description": {
+        "value": "broken headlight and crumpled fender",
+        "confidence": "high",
+        "source_snippet": "Danni: broken headlight and crumpled fender."
+      },
+      "damage_areas": {
+        "value": "headlight, fender",
+        "confidence": "medium",
+        "source_snippet": "broken headlight and crumpled fender"
+      },
+      "injuries_reported": true,
+      "injury_severity": "severe",
+      "injury_details": {
+        "value": "serious injuries to my leg, currently in recovery",
+        "confidence": "high",
+        "source_snippet": "Serious injuries to my leg, currently in recovery."
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "The Carabinieri arrived and filed a report."
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "it",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00065",
+    "summary": "Alfa Romeo Stelvio (2023) damaged in parking lot, wheel arch crushed, tire blown. No note left by responsible party.",
+    "facts": {
+      "incident_date": {
+        "value": "23/11/2024",
+        "confidence": "high",
+        "source_snippet": "Found my Alfa Romeo Stelvio (2023) damaged on 23/11/2024"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "parking street near my workplace",
+        "confidence": "medium",
+        "source_snippet": "in the parking street near my workplace"
+      },
+      "incident_city": {
+        "value": "Brescia",
+        "confidence": "high",
+        "source_snippet": "near my workplace, Brescia"
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "wheel arch crushed, tire blown",
+        "confidence": "high",
+        "source_snippet": "wheel arch crushed, tire blown"
+      },
+      "damage_areas": {
+        "value": "wheel arch, tire",
+        "confidence": "medium",
+        "source_snippet": "wheel arch crushed, tire blown"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "low",
+        "reason": "Not critical for immediate action"
+      },
+      {
+        "field": "num_parties",
+        "importance": "medium",
+        "reason": "Could help identify responsible party"
+      }
+    ],
+    "language": "it",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-00838",
+    "summary": "Hit-and-run incident occurred on 09/03/2022 in Padova, causing damage to the driver's door of a 2018 Volkswagen Golf.",
+    "facts": {
+      "incident_date": {
+        "value": "09/03/2022",
+        "confidence": "high",
+        "source_snippet": "Hit and run, 09/03/2022"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_city": {
+        "value": "Padova",
+        "confidence": "high",
+        "source_snippet": "Hit and run, 09/03/2022, Padova"
+      },
+      "incident_type": "hit_and_run",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "Damage to driver door.",
+        "confidence": "high",
+        "source_snippet": "Damage to driver door."
+      },
+      "damage_areas": {
+        "value": "driver door",
+        "confidence": "high",
+        "source_snippet": "Damage to driver door."
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "The Carabinieri arrived and filed a report."
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_location",
+        "importance": "medium",
+        "reason": "To assist in potential investigation."
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-03906",
+    "summary": "On September 26, 2022, at 9:28 AM, the policyholder lost control of their 2011 Fiat 500 on Via Togliatti near Napoli due to a tire blowout, causing significant body damage to the driver's side after colliding with a parked car. No injuries were reported and no police report was filed.",
+    "facts": {
+      "incident_date": {
+        "value": "26/09/2022",
+        "confidence": "high",
+        "source_snippet": "On 26/09/2022"
+      },
+      "incident_time": {
+        "value": "09:28",
+        "confidence": "high",
+        "source_snippet": "at 09:28"
+      },
+      "incident_location": {
+        "value": "Via Togliatti",
+        "confidence": "high",
+        "source_snippet": "on Via Togliatti"
+      },
+      "incident_city": {
+        "value": "Napoli",
+        "confidence": "medium",
+        "source_snippet": "near Napoli"
+      },
+      "incident_type": "single_vehicle",
+      "num_parties": {
+        "value": "2",
+        "confidence": "high",
+        "source_snippet": "The car hit a parked car."
+      },
+      "other_vehicle": {
+        "value": "parked car",
+        "confidence": "low",
+        "source_snippet": "hit a parked car"
+      },
+      "damage_description": {
+        "value": "significant body damage on the driver side",
+        "confidence": "high",
+        "source_snippet": "significant body damage on the driver side"
+      },
+      "damage_areas": {
+        "value": "driver's side",
+        "confidence": "medium",
+        "source_snippet": "driver's side"
+      },
+      "injuries_reported": false,
+      "injury_severity": "unknown",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No police report was filed."
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-03773",
+    "summary": "Hit and run incident occurred on 23/04/2022 in Palermo, causing damage to the left side of the insured's Fiat Panda. Police were called to the scene.",
+    "facts": {
+      "incident_date": {
+        "value": "23/04/2022",
+        "confidence": "high",
+        "source_snippet": "Hit and run, 23/04/2022"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_city": {
+        "value": "Palermo",
+        "confidence": "high",
+        "source_snippet": "Hit and run, 23/04/2022, Palermo"
+      },
+      "incident_type": "hit_and_run",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "Damage to left side",
+        "confidence": "high",
+        "source_snippet": "Damage to left side"
+      },
+      "damage_areas": {
+        "value": "left side",
+        "confidence": "high",
+        "source_snippet": "Damage to left side"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "yes",
+        "confidence": "high",
+        "source_snippet": "Police were called to the scene"
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_location",
+        "importance": "medium",
+        "reason": "To provide more specific details about the incident"
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-04635",
+    "summary": "Toyota Corolla (2016) damaged in parking area near Bologna train station on 19/07/2021, bumper dented and paint scratched.",
+    "facts": {
+      "incident_date": {
+        "value": "19/07/2021",
+        "confidence": "high",
+        "source_snippet": "on 19/07/2021"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "parking area near the train station",
+        "confidence": "medium",
+        "source_snippet": "in the parking area near the train station"
+      },
+      "incident_city": {
+        "value": "Bologna",
+        "confidence": "high",
+        "source_snippet": "near Bologna"
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "dented bumper and scratched paint",
+        "confidence": "high",
+        "source_snippet": "dented bumper and scratched paint"
+      },
+      "damage_areas": {
+        "value": "bumper, paint",
+        "confidence": "medium",
+        "source_snippet": "dented bumper and scratched paint"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No note left by the responsible party"
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_time",
+        "importance": "low",
+        "reason": "not critical for investigation"
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-03161",
+    "summary": "The policyholder was driving home on 17/05/2021 around 08:43 when they skidded on an icy road and collided with a guardrail, causing damage to the bumper and paint of their Renault Clio. The incident resulted in some neck pain for the policyholder.",
+    "facts": {
+      "incident_date": {
+        "value": "17/05/2021",
+        "confidence": "high",
+        "source_snippet": "Driving home on 17/05/2021"
+      },
+      "incident_time": {
+        "value": "08:43",
+        "confidence": "high",
+        "source_snippet": "around 08:43"
+      },
+      "incident_location": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_city": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_type": "single_vehicle",
+      "num_parties": {
+        "value": "1",
+        "confidence": "high",
+        "source_snippet": "The policyholder"
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "dented bumper and scratched paint",
+        "confidence": "high",
+        "source_snippet": "causing damage to the bumper and paint"
+      },
+      "damage_areas": {
+        "value": "bumper, paint",
+        "confidence": "medium",
+        "source_snippet": "dented bumper and scratched paint"
+      },
+      "injuries_reported": true,
+      "injury_severity": "minor",
+      "injury_details": {
+        "value": "neck pain",
+        "confidence": "high",
+        "source_snippet": "I experienced some neck pain afterwards"
+      },
+      "police_report_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      }
+    },
+    "missing_info": [
+      {
+        "field": "incident_location",
+        "importance": "medium",
+        "reason": "To assist in claim processing and potential repair coordination"
+      }
+    ],
+    "language": "en",
+    "extraction_notes": null
+  },
+  {
+    "claim_id": "CLM-02659",
+    "summary": "The insured's Fiat 500 was parked on Via Verdi in Brescia when the rear bumper became detached and a taillight broke, with no witnesses present.",
+    "facts": {
+      "incident_date": {
+        "value": "15/04/2024",
+        "confidence": "high",
+        "source_snippet": "came back on 15/04/2024"
+      },
+      "incident_time": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "incident_location": {
+        "value": "Via Verdi",
+        "confidence": "high",
+        "source_snippet": "parked on Via Verdi"
+      },
+      "incident_city": {
+        "value": "Brescia",
+        "confidence": "high",
+        "source_snippet": "in Brescia"
+      },
+      "incident_type": "vandalism",
+      "num_parties": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "other_vehicle": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "damage_description": {
+        "value": "rear bumper completely detached, taillight broken",
+        "confidence": "high",
+        "source_snippet": "found rear bumper completely detached, taillight broken"
+      },
+      "damage_areas": {
+        "value": "rear bumper, taillight",
+        "confidence": "high",
+        "source_snippet": "rear bumper completely detached, taillight broken"
+      },
+      "injuries_reported": false,
+      "injury_severity": "none",
+      "injury_details": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "police_report_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No witnesses."
+      },
+      "police_report_number": {
+        "value": null,
+        "confidence": "unknown",
+        "source_snippet": null
+      },
+      "witnesses_mentioned": {
+        "value": "no",
+        "confidence": "high",
+        "source_snippet": "No witnesses."
+      }
+    },
+    "missing_info": [],
+    "language": "it",
     "extraction_notes": null
   }
 ]

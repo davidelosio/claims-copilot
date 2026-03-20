@@ -1,0 +1,43 @@
+(claims-copilot) davide.losio@J6X73KVQY3 claims-copilot % uv run scripts/run_extraction.py --n-sample 50 --eval --model mistral-nemo:12b-instruct-2407-q4_K_M
+
+Loading claims from data/ (sample=50)...
+   Loaded 50 claims
+
+Running extraction with mistral-nemo:12b-instruct-2407-q4_K_M...
+
+Saved to data/extractions/extractions.json
+
+======================================================================
+SAMPLE EXTRACTIONS
+======================================================================
+
+--- CLM-01501 ---
+Summary: On 27/01/2022, a Renault Captur was hit by an unknown vehicle on Via Marconi in Bologna. The other driver fled the scene. The Captur sustained damage to its headlight and fender. A police report was filed.
+Type: hit_and_run
+City: Bologna (high)
+Injuries: False (none)
+
+--- CLM-02586 ---
+Summary: Volkswagen Golf parked on Via Marconi, Torino was found with severe damage to the hood and grille on 19/07/2023.
+Type: vandalism
+City: Torino (high)
+Injuries: False (none)
+Missing: incident_time, police_report_mentioned
+
+--- CLM-02653 ---
+Summary: On March 25, 2022 at around 6:19 PM, the policyholder was driving on Viale Monza in Rome when a Mercedes-Benz GLA rear-ended their BMW Serie 3 at a traffic light. The incident resulted in minor vehicle damage and the policyholder suffered back pain and a sprained wrist. A police report (number 3476/2022) was filed.
+Type: collision
+City: Roma (high)
+Injuries: True (moderate)
+
+======================================================================
+EVALUATION vs GROUND TRUTH
+======================================================================
+
+Total evaluated: 50
+Incident type accuracy: 80.0%
+Injury detection accuracy: 94.0%
+Police report accuracy: 90.0%
+City extraction accuracy: 100.0%
+
+Saved eval to data/extractions/eval_results.json
