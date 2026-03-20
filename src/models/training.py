@@ -283,10 +283,12 @@ def get_feature_importance(
 
     score = estimator.get_booster().get_score(importance_type="gain")
     importances = np.zeros(len(feature_names))
+    feature_index = {name: idx for idx, name in enumerate(feature_names)}
     for fname, imp in score.items():
-        # XGBoost uses f0, f1, ... as default names
-        idx = int(fname.replace("f", ""))
-        if idx < len(importances):
+        idx: Optional[int] = feature_index.get(fname)
+        if idx is None and fname.startswith("f") and fname[1:].isdigit():
+            idx = int(fname[1:])
+        if idx is not None and idx < len(importances):
             importances[idx] = imp
 
     sorted_idx = np.argsort(importances)[::-1][:top_n]
