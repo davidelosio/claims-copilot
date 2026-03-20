@@ -1,0 +1,18 @@
+{
+  "extraction_sample": {
+    "sample_size": 50,
+    "model": "mistral-nemo:12b-instruct-2407-q4_K_M",
+    "incident_type_accuracy_pct": 80.0,
+    "injury_detection_accuracy_pct": 94.0,
+    "police_report_accuracy_pct": 90.0,
+    "city_accuracy_pct": 100.0
+  },
+  "predictive_models": {
+    "complexity_test_accuracy_pct": 75.2,
+    "complexity_val_f1_macro": 0.6597,
+    "handling_days_test_mae": 7.12,
+    "fraud_test_auc_roc": 0.7748,
+    "fraud_precision_at_10pct_review_volume_pct": 57.3
+  },
+  "notes": "These metrics are from synthetic-data experiments and should be treated as proof-of-concept evidence rather than production claims."
+}

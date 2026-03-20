@@ -1,0 +1,72 @@
+{
+  "claim_id": "CLM-01501",
+  "summary": "On 27/01/2022, a Renault Captur was hit by an unknown vehicle on Via Marconi in Bologna. The other driver fled the scene. The Captur sustained damage to its headlight and fender. A police report was filed.",
+  "facts": {
+    "incident_date": {
+      "value": "27/01/2022",
+      "confidence": "high",
+      "source_snippet": "On 27/01/2022"
+    },
+    "incident_time": {
+      "value": "00:12",
+      "confidence": "high",
+      "source_snippet": "at 00:12"
+    },
+    "incident_location": {
+      "value": "Via Marconi",
+      "confidence": "high",
+      "source_snippet": "on Via Marconi"
+    },
+    "incident_city": {
+      "value": "Bologna",
+      "confidence": "high",
+      "source_snippet": "in Bologna"
+    },
+    "incident_type": "hit_and_run",
+    "num_parties": {
+      "value": "2",
+      "confidence": "high",
+      "source_snippet": "my Renault Captur...was hit by an unknown vehicle"
+    },
+    "other_vehicle": {
+      "value": "unknown",
+      "confidence": "medium",
+      "source_snippet": "by an unknown vehicle"
+    },
+    "damage_description": {
+      "value": "broken headlight and crumpled fender",
+      "confidence": "high",
+      "source_snippet": "broken headlight and crumpled fender"
+    },
+    "damage_areas": {
+      "value": "headlight, fender",
+      "confidence": "medium",
+      "source_snippet": "broken headlight and crumpled fender"
+    },
+    "injuries_reported": false,
+    "injury_severity": "none",
+    "injury_details": {
+      "value": null,
+      "confidence": "unknown",
+      "source_snippet": null
+    },
+    "police_report_mentioned": {
+      "value": "yes",
+      "confidence": "high",
+      "source_snippet": "I filed a police report. Police were called to the scene."
+    },
+    "police_report_number": {
+      "value": null,
+      "confidence": "unknown",
+      "source_snippet": null
+    },
+    "witnesses_mentioned": {
+      "value": null,
+      "confidence": "unknown",
+      "source_snippet": null
+    }
+  },
+  "missing_info": [],
+  "language": "en",
+  "extraction_notes": null
+}

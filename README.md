@@ -2,67 +2,55 @@
 
 **AI-powered claim analyzer for motor insurance intake, triage, and review workflows.**
 
-Claims Copilot is a portfolio-grade applied AI prototype built around a hard business domain: first-notice-of-loss and early claim handling for motor insurance. The goal is not to show "an LLM demo", but to show what an end-to-end AI system looks like when it has to generate structured outputs, support human operators, expose uncertainty, and stay grounded in workflow logic.
+Claims Copilot is an applied AI proof of concept built around a hard operational problem: early-stage motor insurance claim handling. The goal is not to present a generic LLM demo, but to show what an end-to-end AI workflow looks like when it has to produce structured outputs, support human review, expose uncertainty, and fit into a realistic business process.
 
-The repo combines:
-
-- synthetic relational claims data generation
-- local LLM extraction with structured schemas
-- ML models for complexity, handling time, and fraud risk
-- deterministic next-best-action logic for handlers
-- a Streamlit UI that turns the pipeline into a usable review surface
+The repository includes the PoC code, a short product demo, curated examples, and supporting documents focused on system design and evaluation.
 
 ## Demo
 
-- Watch the 90-second product walkthrough: [`docs/assets/demo.mov`](docs/assets/demo.mov)
-- Representative screenshots are included below from the handler UI
-
-![Claims Copilot overview](docs/assets/complexity-scores.png)
+- Product walkthrough video: [`docs/assets/demo.mov`](docs/assets/demo.mov)
+- System overview: [`docs/system-overview.md`](docs/system-overview.md)
+- Sample input/output: [`docs/examples/sample-claim-input.md`](docs/examples/sample-claim-input.md), [`docs/examples/sample-claim-output.json`](docs/examples/sample-claim-output.json)
 
 ## What This Project Demonstrates
 
-- framing an ambiguous business workflow as an AI product
-- separating extraction, prediction, and decision layers instead of collapsing everything into one prompt
-- using structured outputs and validation rather than free-form model text
-- evaluating classical ML components with time-based splits
-- designing for auditability and human review in a failure-prone domain
+- business framing around a real operational workflow
+- schema-based information extraction from noisy claim text
+- human-in-the-loop review design rather than fake full automation
+- evaluation discipline on synthetic claims
+- explicit trade-offs around auditability, latency, and production readiness
 
 ## Problem Framing
 
-Insurance claim intake is messy:
+Insurance claim intake is hard because the first customer description is often incomplete, ambiguous, and operationally risky. Useful signals are spread across free text, document presence, policy context, and downstream handling logic.
 
-- the first customer description is incomplete and inconsistent
-- useful signals are split across free text, document presence, policy context, and historical patterns
-- bad automation can create operational risk, fraud leakage, or poor customer experience
+Claims Copilot treats this as a workflow problem:
 
-This project treats the intake problem as a workflow system:
-
-1. parse a claim description into structured facts
-2. score expected complexity, handling time, and fraud risk
-3. turn those signals into review-oriented actions
-4. expose the result in a handler-facing UI
+1. read a free-text claim description
+2. extract structured facts
+3. estimate claim complexity, handling time, and fraud risk
+4. recommend review-oriented next actions for a claims handler
 
 ## End-to-End Workflow
 
 ```mermaid
 flowchart LR
-    A[Synthetic claim generator] --> B[CSV claims, labels, documents, events]
-    B --> C[Feature engineering]
-    B --> D[LLM extraction]
-    C --> E[ML models<br/>complexity / handling days / fraud]
-    D --> F[Structured extraction JSON]
-    B --> G[Policy + document context]
-    E --> H[Next-best-action engine]
-    F --> H
-    G --> H
-    H --> I[Streamlit handler UI]
+    A[Claim description and context] --> B[Structured extraction]
+    A --> C[Predictive scoring]
+    B --> D[Review workflow logic]
+    C --> D
+    D --> E[Handler-facing UI]
 ```
 
-## Screenshots
+## Representative Screens
 
 **Structured extraction and claim review**
 
 ![Extracted facts view](docs/assets/Extracted-facts.png)
+
+**Complexity scores**
+
+![Claims Copilot overview](docs/assets/complexity-scores.png)
 
 **Next-best-action recommendations**
 
@@ -70,149 +58,99 @@ flowchart LR
 
 ## Representative Example
 
-The repo includes a checked extraction example for claim `CLM-01501`, a synthetic hit-and-run case in Bologna.
+The repo includes a synthetic claim example based on `CLM-01501`.
 
 Input description:
 
-> On 27/01/2022 at 00:12, my Renault Captur (2022) was hit by an unknown vehicle on Via Marconi in Bologna. The other driver did not stop. broken headlight and crumpled fender. I filed a police report.
+> On 27/01/2022 at 00:12, my Renault Captur (2022) was hit by an unknown vehicle on Via Marconi in Bologna. The other driver did not stop. broken headlight and crumpled fender. I filed a police report. Police were called to the scene.
 
 Example structured output:
 
 ```json
 {
-  "summary": "Renault Captur hit by an unknown vehicle in Bologna; police report filed.",
+  "summary": "On 27/01/2022, a Renault Captur was hit by an unknown vehicle on Via Marconi in Bologna. The other driver fled the scene. The Captur sustained damage to its headlight and fender. A police report was filed.",
   "facts": {
-    "incident_type": "unknown",
-    "incident_city": null,
-    "damage_description": "broken headlight and crumpled fender",
+    "incident_date": {"value": "27/01/2022", "confidence": "high"},
+    "incident_time": {"value": "00:12", "confidence": "high"},
+    "incident_location": {"value": "Via Marconi", "confidence": "high"},
+    "incident_city": {"value": "Bologna", "confidence": "high"},
+    "incident_type": "hit_and_run",
+    "damage_description": {"value": "broken headlight and crumpled fender", "confidence": "high"},
     "injuries_reported": false,
-    "police_report_mentioned": {
-      "value": "yes",
-      "confidence": "high"
-    }
-  },
-  "missing_info": [
-    {
-      "field": "incident_city",
-      "importance": "medium"
-    },
-    {
-      "field": "other_vehicle",
-      "importance": "high"
-    }
-  ]
+    "police_report_mentioned": {"value": "yes", "confidence": "high"}
+  }
 }
 ```
 
-Why this matters:
+Full sample files:
 
-- the extraction gets some fields right and misses others
-- the mismatch is visible, not hidden
-- the next-best-action layer can still request missing evidence
-- the system is built for human review, not blind straight-through processing
-
-This is the kind of example that makes the project stronger in interviews: it shows system boundaries and failure handling, not fake perfection.
-
-## Dataset Snapshot
-
-The included synthetic dataset is intentionally product-shaped rather than notebook-shaped.
-
-- `5,000` synthetic motor claims
-- `28` incident cities
-- `16.2%` synthetic fraud rate
-- `15.27` average handling days
-- `82.2%` document presence rate across required/recommended documents
-- incident mix includes collision, theft, vandalism, weather, parking, single-vehicle, and hit-and-run cases
-
-Current complexity distribution:
-
-- `simple`: 2,025
-- `medium`: 1,817
-- `complex`: 1,158
+- [`docs/examples/sample-claim-input.md`](docs/examples/sample-claim-input.md)
+- [`docs/examples/sample-claim-output.json`](docs/examples/sample-claim-output.json)
+- [`docs/examples/evaluation-summary.json`](docs/examples/evaluation-summary.json)
 
 ## Evaluation Snapshot
 
-Metrics below come from running `uv run python scripts/train_models.py --csv-dir data --model-dir models` on the included synthetic dataset.
-
 | Component | Metric | Result |
 | --- | --- | --- |
-| Extraction sample (`n=50`, `mistral-nemo:12b-instruct-2407-q4_K_M`) | Incident type accuracy | `80.0%` |
-| Extraction sample (`n=50`, `mistral-nemo:12b-instruct-2407-q4_K_M`) | Injury detection accuracy | `94.0%` |
-| Extraction sample (`n=50`, `mistral-nemo:12b-instruct-2407-q4_K_M`) | Police report accuracy | `90.0%` |
-| Extraction sample (`n=50`, `mistral-nemo:12b-instruct-2407-q4_K_M`) | City extraction accuracy | `100.0%` |
+| Extraction sample (`n=50`, local Mistral) | Incident type accuracy | `80.0%` |
+| Extraction sample (`n=50`, local Mistral) | Injury detection accuracy | `94.0%` |
+| Extraction sample (`n=50`, local Mistral) | Police report accuracy | `90.0%` |
+| Extraction sample (`n=50`, local Mistral) | City extraction accuracy | `100.0%` |
 | Complexity model | Test accuracy | `75.2%` |
 | Complexity model | Validation macro F1 | `0.6597` |
 | Handling time model | Test MAE | `7.12 days` |
 | Fraud model | Test AUC-ROC | `0.7748` |
 | Fraud model | Precision@10% review volume | `57.3%` |
-| Data split | Time-based | `3500 / 750 / 750` |
 
-Raw extraction outputs for the sampled run live in [`data/extractions/extractions.json`](data/extractions/extractions.json), and the evaluation artifact lives in [`data/extractions/eval_results.json`](data/extractions/eval_results.json). The sample is still small enough that it should be read as PoC evidence rather than a stable benchmark.
+These numbers come from synthetic-data experiments and should be read as proof-of-concept evidence rather than production performance claims.
 
-## System Layers
+## Repository Structure
 
-- [`src/data/generator.py`](src/data/generator.py): builds a relational synthetic world with policyholders, policies, vehicles, claims, labels, documents, and event histories
-- [`src/extraction/pipeline.py`](src/extraction/pipeline.py): local LLM extraction via Ollama with a constrained JSON schema
-- [`src/models/features.py`](src/models/features.py): feature engineering aligned to what is knowable at intake time
-- [`src/models/training.py`](src/models/training.py): time-based model training, evaluation, artifact loading, and prediction
-- [`src/serving/next_best_action.py`](src/serving/next_best_action.py): auditable routing and action generation
-- [`src/ui/app.py`](src/ui/app.py): handler-facing review UI that assembles the full workflow
-
-## Local-First Technical Choices
-
-- **Local LLM extraction** via Ollama keeps the demo cheap, inspectable, and easy to run without external API dependencies.
-- **Structured schemas** force the extraction layer to emit machine-usable fields instead of loose summaries.
-- **Time-based validation** is used for the ML models to better simulate real deployment conditions.
-- **Rules for next-best-action** keep the action layer easy to audit and explain before introducing learned ranking.
+- `src/data/`: synthetic claim generation and data utilities
+- `src/extraction/`: schema-based extraction and extraction evaluation
+- `src/models/`: predictive scoring features and training logic
+- `src/serving/`: review workflow and next-best-action logic
+- `src/ui/`: Streamlit interface for claim review
+- `scripts/`: utility entrypoints for generation, extraction, and training
 
 ## Quickstart
 
 ```bash
-# Install all dependencies
+# Install dependencies
 uv sync --extra dev
-
-# Generate synthetic data
-uv run python scripts/generate_claims.py -n 5000
 
 # Run tests
 uv run pytest -q
 
-# Optional: run LLM extraction on a sample (requires Ollama)
-ollama serve
-ollama pull mistral:7b-instruct-q4_K_M
-uv run python scripts/run_extraction.py --n-sample 50 --eval
-
-# Train models
+# Optional: train models
 uv run python scripts/train_models.py --csv-dir data --model-dir models
 
 # Launch the UI
 uv run streamlit run src/ui/app.py
 ```
 
-## Repo Guide
+## Technical Direction
 
-- Technical architecture: [`docs/showcase-architecture.md`](docs/showcase-architecture.md)
-- Recruiter / hiring-manager case study: [`docs/case-study.md`](docs/case-study.md)
-- Demo recording script: [`docs/demo-script.md`](docs/demo-script.md)
-- CV / LinkedIn / outreach material: [`docs/job-search-kit.md`](docs/job-search-kit.md)
-- Deeper codebase study guide: [`docs/codebase-tour.md`](docs/codebase-tour.md)
+The system is designed around a few principles:
+
+- schema-first extraction
+- structured outputs with field-level confidence where available
+- review-oriented UX instead of "magic automation"
+- auditable decision support
+- explicit acknowledgment of limits and failure modes
+
+More detail is in [`docs/system-overview.md`](docs/system-overview.md).
 
 ## Limitations
 
-- no service boundary yet; the UI loads artifacts directly from local files
-- extraction evaluation is committed for a 50-claim sample, but not yet for a broad benchmark run
-- no production auth, monitoring, feedback capture, or tracing
-- next-best-action logic is deterministic v1 logic, not a learned decision policy
-- synthetic data is useful for prototyping and evaluation loops, but not a substitute for real insurer operations data
+- this is a PoC, not a production insurance system
+- evaluation is on synthetic claims, not real insurer data
+- extraction quality depends on the local model and prompt setup
+- production concerns like auth, monitoring, feedback loops, and service boundaries are intentionally out of scope here
+- no open-source license is granted through this repository
 
-## Why This Repo Exists
+## Usage Notice
 
-This project is meant to show the difference between:
+Copyright © 2026 Davide Losio. All rights reserved.
 
-- "I can call an LLM"
-
-and
-
-- "I can design, evaluate, and package an AI workflow around a messy operational problem"
-
-That is the level of framing the project is optimized for.
+This repository is public for viewing and evaluation. No license is granted for reuse, modification, or redistribution.
