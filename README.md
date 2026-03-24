@@ -106,6 +106,7 @@ These numbers come from synthetic-data experiments and should be read as proof-o
 
 ## Repository Structure
 
+- `src/api/`: FastAPI endpoints for persisted copilot outputs and handler feedback
 - `src/data/`: synthetic claim generation and data utilities
 - `src/extraction/`: schema-based extraction and extraction evaluation
 - `src/models/`: predictive scoring features and training logic
@@ -124,6 +125,12 @@ uv run pytest -q
 
 # Optional: train models
 uv run python scripts/train_models.py --csv-dir data --model-dir models
+
+# Run the API (requires CLAIMS_COPILOT_DSN for Postgres-backed endpoints)
+uv run uvicorn src.api.app:app --reload
+
+# Point the UI at the local API
+export CLAIMS_COPILOT_API_URL="http://127.0.0.1:8000"
 
 # Launch the UI
 uv run streamlit run src/ui/app.py

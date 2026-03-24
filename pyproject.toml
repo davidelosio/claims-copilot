@@ -26,9 +26,6 @@ ml = [
     "numba>=0.59; platform_system != 'Darwin' or platform_machine != 'x86_64'",
     "llvmlite>=0.42; platform_system != 'Darwin' or platform_machine != 'x86_64'",
 ]
-llm = [
-    "anthropic>=0.40",
-]
 serving = [
     "fastapi>=0.110",
     "uvicorn>=0.29",
@@ -37,7 +34,7 @@ ui = [
     "streamlit>=1.35",
 ]
 dev = [
-    "claims-copilot[ml,llm,serving,ui]",
+    "claims-copilot[ml,serving,ui]",
     "pytest>=8.0",
     "ruff>=0.4",
     "jupyter>=1.0",

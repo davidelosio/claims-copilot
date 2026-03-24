@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Optional
 
 import pandas as pd
@@ -278,22 +279,83 @@ def render_model_performance() -> None:
         st.sidebar.metric("Handling MAE", f"{handling_days.get('mae', 0):.1f} days")
 
 
-def render_feedback_buttons(claim_id: str) -> None:
-    """Handler feedback buttons — these create training data."""
+def render_output_persistence(
+    claim_id: str,
+    saved_output: Optional[dict],
+    api_error: Optional[str],
+) -> bool:
+    """Render current persistence status and return whether the save button was clicked."""
+    st.markdown("---")
+    st.markdown("##### 💾 Copilot Snapshot")
+
+    if api_error:
+        st.warning(api_error)
+    elif saved_output:
+        output_id = saved_output.get("output_id", "—")
+        created_at = _format_timestamp(saved_output.get("created_at"))
+        st.caption(f"Latest saved snapshot: `#{output_id}` at {created_at}")
+    else:
+        st.caption("No saved snapshot yet for this claim")
+
+    return st.button(
+        "Save current copilot snapshot",
+        key=f"save_output_{claim_id}",
+        use_container_width=True,
+        disabled=api_error is not None,
+    )
+
+
+def render_feedback_form(
+    claim_id: str,
+    saved_output: Optional[dict],
+    api_error: Optional[str],
+) -> Optional[dict]:
+    """Render feedback form and return a payload descriptor when submitted."""
     st.markdown("---")
     st.markdown("##### 💬 Feedback")
-    cols = st.columns(3)
 
-    with cols[0]:
-        if st.button("✅ Helpful", key=f"accept_{claim_id}", use_container_width=True):
-            st.success("Thanks! Feedback recorded.")
-    with cols[1]:
-        if st.button("✏️ Partially", key=f"edit_{claim_id}", use_container_width=True):
-            st.info("What would you change?")
-            st.text_area("Feedback", key=f"feedback_text_{claim_id}", height=80)
-    with cols[2]:
-        if st.button("❌ Not helpful", key=f"reject_{claim_id}", use_container_width=True):
-            st.warning("Sorry! We'll improve.")
+    if api_error:
+        st.caption("Feedback is disabled until the persistence API is reachable")
+        return None
+
+    if not saved_output:
+        st.info("Save the current copilot snapshot first, then attach feedback to it.")
+        return None
+
+    output_id = int(saved_output["output_id"])
+    st.caption(f"Feedback will be attached to snapshot `#{output_id}`")
+
+    with st.form(key=f"feedback_form_{claim_id}_{output_id}"):
+        feedback_type = st.radio(
+            "How useful was this output?",
+            options=["accepted", "edited", "rejected"],
+            horizontal=True,
+            format_func=lambda value: {
+                "accepted": "Helpful",
+                "edited": "Partially",
+                "rejected": "Not helpful",
+            }[value],
+        )
+        detail_text = st.text_area(
+            "What changed or why?",
+            height=100,
+            help="Required for edited feedback. Optional for helpful/not helpful.",
+        )
+        submitted = st.form_submit_button("Send feedback", use_container_width=True)
+
+    if not submitted:
+        return None
+
+    if feedback_type == "edited" and not detail_text.strip():
+        st.warning("Describe what you changed so the feedback is useful.")
+        return None
+
+    return {
+        "claim_id": claim_id,
+        "output_id": output_id,
+        "feedback_type": feedback_type,
+        "detail_text": detail_text,
+    }
 
 
 def render_dashboard(df: pd.DataFrame) -> None:
@@ -325,3 +387,12 @@ def render_dashboard(df: pd.DataFrame) -> None:
     with col_right2:
         st.markdown("###### Fraud by Incident Type")
         st.bar_chart(df.groupby("incident_type")["is_fraud"].mean().sort_values(ascending=False))
+
+
+def _format_timestamp(raw: Optional[str]) -> str:
+    if not raw:
+        return "unknown time"
+    try:
+        return datetime.fromisoformat(raw.replace("Z", "+00:00")).strftime("%Y-%m-%d %H:%M")
+    except ValueError:
+        return raw
