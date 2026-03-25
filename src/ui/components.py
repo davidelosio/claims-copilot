@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from datetime import datetime
 from typing import Optional
 
 import pandas as pd
@@ -277,62 +276,20 @@ def render_model_performance() -> None:
     handling_days = metrics.get("handling_days", {})
     if handling_days:
         st.sidebar.metric("Handling MAE", f"{handling_days.get('mae', 0):.1f} days")
-
-
-def render_output_persistence(
-    claim_id: str,
-    saved_output: Optional[dict],
-    api_error: Optional[str],
-) -> bool:
-    """Render current persistence status and return whether the save button was clicked."""
-    st.markdown("---")
-    st.markdown("##### 💾 Copilot Snapshot")
-
-    if api_error:
-        st.warning(api_error)
-    elif saved_output:
-        output_id = saved_output.get("output_id", "—")
-        created_at = _format_timestamp(saved_output.get("created_at"))
-        st.caption(f"Latest saved snapshot: `#{output_id}` at {created_at}")
-    else:
-        st.caption("No saved snapshot yet for this claim")
-
-    return st.button(
-        "Save current copilot snapshot",
-        key=f"save_output_{claim_id}",
-        use_container_width=True,
-        disabled=api_error is not None,
-    )
-
-
-def render_feedback_form(
-    claim_id: str,
-    saved_output: Optional[dict],
-    api_error: Optional[str],
-) -> Optional[dict]:
+def render_feedback_form(claim_id: str) -> Optional[dict]:
     """Render feedback form and return a payload descriptor when submitted."""
     st.markdown("---")
     st.markdown("##### 💬 Feedback")
+    st.caption("Submitting feedback will save the current on-screen output first.")
 
-    if api_error:
-        st.caption("Feedback is disabled until the persistence API is reachable")
-        return None
-
-    if not saved_output:
-        st.info("Save the current copilot snapshot first, then attach feedback to it.")
-        return None
-
-    output_id = int(saved_output["output_id"])
-    st.caption(f"Feedback will be attached to snapshot `#{output_id}`")
-
-    with st.form(key=f"feedback_form_{claim_id}_{output_id}"):
+    with st.form(key=f"feedback_form_{claim_id}"):
         feedback_type = st.radio(
             "How useful was this output?",
             options=["accepted", "edited", "rejected"],
             horizontal=True,
             format_func=lambda value: {
                 "accepted": "Helpful",
-                "edited": "Partially",
+                "edited": "Edited",
                 "rejected": "Not helpful",
             }[value],
         )
@@ -352,7 +309,6 @@ def render_feedback_form(
 
     return {
         "claim_id": claim_id,
-        "output_id": output_id,
         "feedback_type": feedback_type,
         "detail_text": detail_text,
     }
@@ -387,12 +343,3 @@ def render_dashboard(df: pd.DataFrame) -> None:
     with col_right2:
         st.markdown("###### Fraud by Incident Type")
         st.bar_chart(df.groupby("incident_type")["is_fraud"].mean().sort_values(ascending=False))
-
-
-def _format_timestamp(raw: Optional[str]) -> str:
-    if not raw:
-        return "unknown time"
-    try:
-        return datetime.fromisoformat(raw.replace("Z", "+00:00")).strftime("%Y-%m-%d %H:%M")
-    except ValueError:
-        return raw

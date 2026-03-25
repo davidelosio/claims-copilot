@@ -28,7 +28,6 @@ from src.ui.components import (
     render_header,
     render_model_performance,
     render_next_actions,
-    render_output_persistence,
 )
 from src.ui.constants import DASHBOARD_VIEW, VIEW_OPTIONS
 from src.ui.data import (
@@ -92,8 +91,6 @@ def main() -> None:
     row = df[df["claim_id"] == selected_id].iloc[0]
     claim_docs = documents[documents["claim_id"] == selected_id]
     extraction = extractions.get(selected_id)
-    api_error = None
-    saved_output = None
 
     model_output = None
     if predictor:
@@ -101,12 +98,6 @@ def main() -> None:
             model_output = get_claim_prediction(selected_id, predictor)
         except Exception as exc:
             st.sidebar.warning(f"Model prediction failed: {exc}")
-
-    try:
-        saved_output = api_client.get_latest_output(selected_id)
-    except (HTTPError, URLError) as exc:
-        api_error = str(exc)
-        st.sidebar.info("Persistence API unavailable — output saving and feedback are disabled.")
 
     render_claim_overview(row, model_output)
     st.markdown("---")
@@ -129,22 +120,6 @@ def main() -> None:
         else:
             st.caption("Train models to see next-best-action recommendations")
 
-        if model_output and nba_result:
-            save_clicked = render_output_persistence(selected_id, saved_output, api_error)
-            if save_clicked:
-                try:
-                    saved_output = api_client.create_output(
-                        build_copilot_output_payload(
-                            claim_id=selected_id,
-                            extraction=extraction,
-                            model_output=model_output,
-                            nba_result=nba_result,
-                        )
-                    )
-                    st.success(f"Saved copilot snapshot #{saved_output['output_id']}.")
-                except (HTTPError, URLError) as exc:
-                    st.error(str(exc))
-
     with col_side:
         render_extracted_facts(extraction)
         st.markdown("---")
@@ -157,13 +132,28 @@ def main() -> None:
         st.markdown("---")
         render_claim_context(row)
 
-    feedback_request = render_feedback_form(selected_id, saved_output, api_error)
-    if feedback_request:
+    feedback_request = None
+    if model_output and nba_result:
+        feedback_request = render_feedback_form(selected_id)
+    else:
+        st.markdown("---")
+        st.markdown("##### 💬 Feedback")
+        st.caption("Train models to enable feedback on the current copilot output.")
+
+    if feedback_request and model_output and nba_result:
         try:
+            current_output = api_client.create_output(
+                build_copilot_output_payload(
+                    claim_id=selected_id,
+                    extraction=extraction,
+                    model_output=model_output,
+                    nba_result=nba_result,
+                )
+            )
             feedback = api_client.create_feedback(
                 build_feedback_payload(
                     claim_id=feedback_request["claim_id"],
-                    output_id=feedback_request["output_id"],
+                    output_id=current_output["output_id"],
                     feedback_type=feedback_request["feedback_type"],
                     detail_text=feedback_request["detail_text"],
                 )
