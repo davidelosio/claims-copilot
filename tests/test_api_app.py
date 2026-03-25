@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 from fastapi.testclient import TestClient
 
 from src.api.app import app, get_repository
+from src.api.repository import CopilotRepository
 from src.api.schemas import (
     CopilotFeedback,
     CopilotFeedbackCreate,
@@ -13,7 +14,7 @@ from src.api.schemas import (
 )
 
 
-class FakeCopilotRepository:
+class FakeCopilotRepository(CopilotRepository):
     def __init__(self):
         self._outputs: list[CopilotOutput] = []
         self._feedback: list[CopilotFeedback] = []
@@ -85,6 +86,67 @@ def test_create_output_and_fetch_latest_output():
     body = latest_response.json()
     assert body["output_id"] == 1
     assert body["summary"] == "Collision reported with rear bumper damage."
+
+
+def test_analyze_claim_generates_and_persists_backend_owned_output():
+    client, _repo = _build_client()
+
+    response = client.post(
+        "/claims/CLM-300/analysis",
+        json={
+            "claim": {
+                "incident_type": "collision",
+                "injuries": True,
+                "injury_severity": "minor",
+                "num_parties": 2,
+                "damage_estimate": 2200,
+                "vehicle_value": 12000,
+                "status": "new",
+                "policy_type": "comprehensive",
+                "is_early_claim": False,
+                "is_night_incident": False,
+            },
+            "documents": [],
+            "model_output": {
+                "complexity_label": "medium",
+                "complexity_confidence": 0.74,
+                "recommended_queue": "standard",
+                "expected_handling_days": 8,
+                "fraud_score": 0.18,
+                "fraud_label": "low",
+            },
+            "extraction": {
+                "summary": "Two-party collision with injuries reported.",
+                "facts": {"incident_type": "collision"},
+                "missing_info": [
+                    {
+                        "field": "other driver details",
+                        "importance": "medium",
+                        "reason": "Needed for liability review",
+                    }
+                ],
+            },
+            "model_versions": {"predictor": "complexity_predictor_v1"},
+        },
+    )
+
+    assert response.status_code == 201
+    body = response.json()
+    assert body["claim_id"] == "CLM-300"
+    assert body["summary"] == "Two-party collision with injuries reported."
+    assert body["model_versions"] == {
+        "predictor": "complexity_predictor_v1",
+        "workflow_engine": "next_best_action_v1",
+    }
+    action_names = {action["action"] for action in body["next_actions"]["actions"]}
+    assert "Request missing Damage photos" in action_names
+    assert "Request medical report" in action_names
+    assert "Contact other party/parties for their version" in action_names
+
+    latest_response = client.get("/claims/CLM-300/copilot/latest")
+
+    assert latest_response.status_code == 200
+    assert latest_response.json()["output_id"] == body["output_id"]
 
 
 def test_get_latest_output_returns_404_when_missing():

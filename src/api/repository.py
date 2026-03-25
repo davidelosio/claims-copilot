@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Protocol
+from abc import ABC, abstractmethod
 
 import psycopg
 from psycopg.rows import dict_row
@@ -14,20 +14,23 @@ from src.api.schemas import (
 )
 
 
-class CopilotRepository(Protocol):
+class CopilotRepository(ABC):
     """Persistence contract for copilot outputs and feedback."""
 
+    @abstractmethod
     def create_output(self, payload: CopilotOutputCreate) -> CopilotOutput:
         """Persist a copilot output."""
 
+    @abstractmethod
     def get_latest_output(self, claim_id: str) -> CopilotOutput | None:
         """Return the latest output for a claim, if any."""
 
+    @abstractmethod
     def create_feedback(self, payload: CopilotFeedbackCreate) -> CopilotFeedback:
         """Persist handler feedback for a generated output."""
 
 
-class PostgresCopilotRepository:
+class PostgresCopilotRepository(CopilotRepository):
     """Thin psycopg repository.
 
     This keeps the first API slice simple:
